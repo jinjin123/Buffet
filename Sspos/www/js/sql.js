@@ -21,7 +21,7 @@ sql = (function() {
 	        tx.executeSql('create table if not exists product_category (nid text primary key,title text,start_time text,end_time text,pid INTEGER)');
 	        //创建产品表
 	        tx.executeSql('DROP TABLE IF EXISTS product');
-	        tx.executeSql('create table if not exists product (sku text primary key,title text,price text,sold_out text,nid text,image text,imageurl text,start_time text,end_time text,weight text)');
+	        tx.executeSql('create table if not exists product (sku text primary key,title text,price text,sold_out text,nid text,image text,imageurl text,time_period text,weight text)');
 	        //创建订单表
 	        tx.executeSql('DROP TABLE IF EXISTS orderinfo');
 	        tx.executeSql('create table if not exists orderinfo (orderid text primary key,payamount text,paystatus text,paytype text,discountamount text,productlist text,addtime text)');
@@ -136,12 +136,12 @@ sql = (function() {
                                 }
                             }
                         }
-                        tx.executeSql('insert or replace into product (sku,title,price,sold_out,nid,image,imageurl,start_time,end_time,weight) values(?,?,?,?,?,?,?,?,?,?)',
-                                [product.sku, product.title, product.price, product.sold_out, nid, ret.getThumbNameByUrl(my_image), my_image,timelist[0],timelist[timelist.length-1],product.weight],
+                        tx.executeSql('insert or replace into product (sku,title,price,sold_out,nid,image,imageurl,time_period,weight) values(?,?,?,?,?,?,?,?,?)',
+                                [product.sku, product.title, product.price, product.sold_out, nid, ret.getThumbNameByUrl(my_image), my_image,JSON.stringify(product.time_period),product.weight],
                                 function(tx,res){
 
                         },function(e){
-
+                        	console.log(e);
                         })
 					}
 					console.log("success: insert products is ok");

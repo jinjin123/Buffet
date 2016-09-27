@@ -1,0 +1,35 @@
+﻿
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    background-color: #eaeaea;
+    border-left: 1px solid #ccc;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+html body {
+    -webkit-touch-callout: none;
+    -ms-content-zooming:none;
+    -webkit-text-size-adjust: none;
+    user-select: none;
+    -moz-user-select:none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+    -ms-touch-select:none;
+    position: relative;
+    background-attachment:fixed;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
+	overflow: hidden;
+    background-color:#fff;
+    font-family:"Microsoft Yahei", serif;
+}
