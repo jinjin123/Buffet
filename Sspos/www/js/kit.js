@@ -46,6 +46,27 @@
         }  
         return false;  
     };
+
+    ret.setTimerout = function (val,time,fun) {
+        val = setTimeout(function () {
+            if (fun && (typeof (fun) == "function")) {
+                fun();
+            }
+        }, time);
+    }
+    ret.clearTimerout = function (val) {
+        clearTimeout(val);
+    }
+    ret.setTimerInterval = function (val,time,fun) {
+        val = setInterval(function () {
+            if (fun && (typeof (fun) == "function")) {
+                fun();
+            }
+        },time)
+    }
+    ret.clearTimerInterval = function (val) {
+        clearTimeout(val);
+    }
     return ret;
 })();
 

@@ -8,7 +8,7 @@ config = (function () {
     ret.OC_URL = "http://172.16.103.192:8080/";
     ret.ACCESS_TOKEN = "hty4B91i8S02je45FL07AnN29UB7Hu2mZ2t1864Hk29Oji06M1397212281Th717";
     //mkt
-    ret.MKT_URL = "http://mkt.zkungfu.com/api/marketing/get-image";
+    ret.MKT_URL = "http://mkt.zkungfu.com/api/marketing/";
     //crm
     ret.CRM_URL = "http://crm.zkungfu.com/zkf-crm/api/";
     ret.CRM_ACCESSTOKEN ="W/bkcCjGNmzjS/l6DTwxDA==";
