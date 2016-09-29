@@ -20,7 +20,7 @@ product = (function () {
 				for(var i=0; i<result.length; i++){
 					var ctg = result.item(i);
 					categoryList.push(ctg);
-					if(categoryList.[ctg.nid] == null) {
+					if(playlist[ctg.nid] == null) {
 						playlist[ctg.nid] = {};
 					}
 					var date = new Date();
@@ -62,7 +62,7 @@ product = (function () {
 			}else {
 				console.log("error: 加载产品失败");
 			}
-		}
+		});
 	}
 	return ret;
-})
+})();

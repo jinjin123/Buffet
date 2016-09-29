@@ -1,15 +1,16 @@
 $(document).ready(function () {
 	
-    sql.opendb();
+    /*sql.opendb();
     sql.createTable(); //第一次打开程序时执行此方法一次
     sql.ipc();
     sql.isi();
-    sql.ipt();
-
+    sql.ipt();*/
+    slideshow.hide(); 
+    product.show();
     $('#body').css('height', window.innerHeight);
     $('#body').css('width', window.innerWidth);
     
-    var backTime; //返回首页计时
+    /*var backTime; //返回首页计时
     $(document).click(function(){  
         kit.setTimerout(backTime,180*1000,function(){
         	$('#slideshow').show();
@@ -76,7 +77,6 @@ $(document).ready(function () {
             } else {
               image.direction = "right";
             }
-
             container.appendChild(image);
             image.style.opacity = 0;
           
@@ -266,5 +266,5 @@ $(document).ready(function () {
                 this.ctx.restore();
             }
         };
-    }) 
+    }) */
 } );
