@@ -23,12 +23,12 @@
 	padding-bottom: 20px !important;
 }
 #proright{
-	padding-top: 20px;
+	padding-top: 20px !important;
+	padding-left: 20px !important;
 	background-color: #07111d;
 	height: 100%;
 }
 #storelogo{
-	background-color: #fff;
 	height: 170px;
 	margin-bottom: 20px;
 	background-color: #000;
@@ -39,7 +39,8 @@
 	padding: 0px;
 	overflow-y: scroll;
 }
-.ctitle{height: 80px;
+.ctitle{
+	height: 80px;
 	padding-left: 10px !important;
 	white-space:normal; 
 	word-break:break-all;
@@ -93,7 +94,70 @@
 	height: 850px;
 	padding: 0 !important;
 	overflow-y: scroll;
+	bottom: 0;
 }
+
+.reproducts{
+	display: none;
+	height: 480px;
+	width: auto;
+	padding: 0 !important;
+	background-color: #07111d;
+	bottom: 0px;
+	margin-left: 10px;
+	margin-top: 560px;
+	position: relative;
+
+}
+.reclose{
+	background-image: url('../images/x.png');
+	float: right;
+	height: 24px;
+	width: 24px;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+.recontent{
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	margin-top: 36px;
+	height: 362px;
+}
+.imgleft{
+	display: none;
+	margin-top:128px;
+	float: left;
+}
+.imgright{
+	display: none;
+	margin-top:128px;
+	float: right;
+}
+.remiddle{
+	overflow-x:scroll;
+	overflow-y: hidden;
+	width: 780px;
+	height: 362px;
+	white-space: nowrap;
+	margin: 0 auto;
+}
+.reproduct{
+	display: inline-block;
+	height: 362px;
+	width: 240px;
+	margin-left: 20px;
+}
+.content{
+	height: 337px;
+	width: 240px;
+	background-color: #fff;
+}
+
+
+
+
 .products>.product{
 	height: 210px;
 	width: 262px;
@@ -105,6 +169,22 @@
 	background-image: url('../images/zc.png');
 	background-repeat: no-repeat;
 	background-position: 10px 10px;
+}
+.prosol{
+	position: absolute;
+	height: 200px;
+	width: 252px;
+	background-image: url('../images/已售罄.png');
+	background-repeat: no-repeat;
+	background-position: left bottom;
+}
+.protime{
+	position: absolute;
+	height: 200px;
+	width: 252px;
+	background-image: url('../images/未开售.png');
+	background-repeat: no-repeat;
+	background-position: left bottom;
 }
 .proimage,.proreplace{
 	padding: 0 !important;
@@ -153,10 +233,112 @@
 }
 .cartTitle{
 	height: 170px;
+	padding: 0 !important;
 }
 .cartimage{
 	height: 83px;
 	background-image: url('../images/gwc.png');
 	background-repeat: no-repeat;
 	border-bottom: 2px solid #fff;
+}
+.cartclear{
+	height: 85px;
+	padding-left: 10px !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	padding-right: 0px !important;
+
+}
+.istakeout{
+	height: 85px;
+	background-image: url('../images/wd.png');
+	background-repeat: no-repeat;
+	background-position: 0px 28px;
+	line-height: 85px;
+	color: #fff;
+	font-size: 24px;
+	padding-left: 75px !important;
+}
+.clear{
+	height: 85px;
+	line-height: 85px;
+	background-image: url('../images/delete.png');
+	background-repeat: no-repeat;
+	background-position: 0px 28px;
+	font-size: 24px;
+	color: #db4f2e;
+	padding-left: 40px !important;
+}
+.cart{
+	height: 750px;
+	padding-top: 0 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	padding-bottom: 0px !important;
+	margin-bottom: 20px !important;
+	height: 730px;
+	overflow-y:scroll;
+}
+.cartpro{
+	padding: 0 !important;
+	background-color: #fff;
+	height: 100px;
+	margin-bottom: 2px;
+	position: relative !important;
+}
+.cartproimg{
+	padding: 0 !important;
+	height: 100px;
+}
+.cartproimg>img{
+	height: 100%;
+	text-align: center;;
+}
+.cartproinfo{
+	height: 100px;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+	padding-right: 0 !important;
+	padding-left: 0px !important;
+}
+.cartproname{
+	height: 100px;
+	padding: 0 !important;
+	color:#638ab3;
+	font-size: 16px;
+}
+.cartproname>.name{
+	display: inline-block;
+	height: 60px;
+	border-bottom: 1px solid #d1d1d1;
+}
+.cartproname>.price{
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+}
+.btn-group{
+	position: absolute !important;
+	bottom: 10px;
+}
+.btn{
+	width: 40px !important;
+	font-size: 20px;
+	background-color: #999999 !important;
+	border-color: #999999 !important;
+}
+.nums{
+	width: 50px !important;
+	background-color: #7e7e7e !important;
+	border-color: #7e7e7e !important;
+}
+
+.cartpay{
+	height: 120px;
+	padding: 0 !important;
+	background-color: #ffb600;
+	text-align: center;
+	line-height: 120px;
+	font-size: 30px;
+	color: #fff;
 }

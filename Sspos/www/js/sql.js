@@ -18,10 +18,10 @@ sql = (function() {
 			tx.executeSql('create table if not exists storeinfo (storeid text primary key,title text,address text,address_detail text,pid text,version text,update_detime text)');
 	        //创建产品分类表
 	        tx.executeSql('DROP TABLE IF EXISTS product_category');
-	        tx.executeSql('create table if not exists product_category (nid text primary key,title text,start_time text,end_time text,pid INTEGER)');
+	        tx.executeSql('create table if not exists product_category (nid text primary key,title text,start_time text,end_time text,pid INTEGER,image text)');
 	        //创建产品表
 	        tx.executeSql('DROP TABLE IF EXISTS product');
-	        tx.executeSql('create table if not exists product (sku text primary key,title text,price text,sold_out text,nid text,image text,imageurl text,time_period text,weight text)');
+	        tx.executeSql('create table if not exists product (sku text primary key,title text,price text,sold_out text,nid text,image text,imageurl text,time_period text,weight text,isreplace text)');
 	        //创建订单表
 	        tx.executeSql('DROP TABLE IF EXISTS orderinfo');
 	        tx.executeSql('create table if not exists orderinfo (orderid text primary key,payamount text,paystatus text,paytype text,discountamount text,productlist text,addtime text)');
@@ -69,8 +69,8 @@ sql = (function() {
 				db.transaction(function(tx){
 					tx.executeSql('delete from product_category');
 					for (var va in categorys) {
-						tx.executeSql('insert or replace into product_category (title,nid,start_time,end_time,pid) values(?,?,?,?,?)',
-                                [categorys[va].name,categorys[va].tid,"00:00","23:59",categorys[va].weight],
+						tx.executeSql('insert or replace into product_category (title,nid,start_time,end_time,pid,image,image2) values(?,?,?,?,?,?)',
+                                [categorys[va].name,categorys[va].tid,"00:00","23:59",categorys[va].weight,"images/zc.png"],
 							function(tx,res){
 
 						},function(e){
@@ -136,8 +136,8 @@ sql = (function() {
                                 }
                             }
                         }
-                        tx.executeSql('insert or replace into product (sku,title,price,sold_out,nid,image,imageurl,time_period,weight) values(?,?,?,?,?,?,?,?,?)',
-                                [product.sku, product.title, product.price, product.sold_out, nid, ret.getThumbNameByUrl(my_image), my_image,JSON.stringify(product.time_period),product.weight],
+                        tx.executeSql('insert or replace into product (sku,title,price,sold_out,nid,image,imageurl,time_period,weight,isreplace) values(?,?,?,?,?,?,?,?,?,?)',
+                                [product.sku, product.title, product.price, product.sold_out, nid, ret.getThumbNameByUrl(my_image), my_image,JSON.stringify(product.time_period),product.weight,true],
                                 function(tx,res){
 
                         },function(e){
@@ -223,13 +223,12 @@ sql = (function() {
 		})
 	}
 	//查询菜品分类
-	ret.queryCategory = function(result,fun){
+	ret.queryCategory = function(fun){
 		db = ret.checkdb(db);
 		db.transaction(function (tx) {
 			tx.executeSql('SELECT * FROM product_category ORDER BY pid ASC', [], function(tx,res){
 				if(res.rows.length >0){
-					result = res.rows;
-					fun(true);
+					fun(true,res.rows);
 				}else{fun(false);}
 			},function(e){
 				console.log("error: select product_category error");
@@ -238,16 +237,17 @@ sql = (function() {
 		})
 	}
 	//查询菜品
-	ret.queryProduct = function(result,fun){
+	ret.queryProduct = function(fun){
 		db = ret.checkdb(db);
-		db.transaction('SELECT * FROM product', [], function(tx,res){
-			if(res.rows.length >0){
-				result = res.rows;
-				fun(true);
-			}else{fun(false);}
-		},function(e){
-			console.log("error: select product error");
-			fun(false);
+		db.transaction(function(tx) {
+			tx.executeSql('SELECT * FROM product', [], function(tx,res){
+				if(res.rows.length >0){
+					fun(true,res.rows);
+				}else{fun(false);}
+			},function(e){
+				console.log("error: select product error");
+				fun(false);
+			})
 		})
 	}
 	//检查数据库是否打开

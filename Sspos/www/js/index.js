@@ -1,16 +1,16 @@
 $(document).ready(function () {
 	
-    /*sql.opendb();
-    sql.createTable(); //第一次打开程序时执行此方法一次
-    sql.ipc();
-    sql.isi();
-    sql.ipt();*/
+    sql.opendb();
+    // sql.createTable(); //第一次打开程序时执行此方法一次
+    // sql.ipc();
+    // sql.isi();
+    // sql.ipt();
     slideshow.hide(); 
-    product.show();
+    product.init();
     $('#body').css('height', window.innerHeight);
     $('#body').css('width', window.innerWidth);
     
-    /*var backTime; //返回首页计时
+    var backTime; //返回首页计时
     $(document).click(function(){  
         kit.setTimerout(backTime,180*1000,function(){
         	$('#slideshow').show();
@@ -39,7 +39,12 @@ $(document).ready(function () {
         var margin = 50;
 
         var container = document.getElementById('container');
-        var imagesURLList = slideshow.imagesURLList;
+        //var imagesURLList = slideshow.imagesURLList;
+        var imagesURLList = [
+            'images/02.jpg',
+            'images/04.jpg',
+            'images/05.jpg'
+        ]
         var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
             TweenMax.set(container, {perspective:500});
 
@@ -266,5 +271,5 @@ $(document).ready(function () {
                 this.ctx.restore();
             }
         };
-    }) */
+    }) 
 } );
