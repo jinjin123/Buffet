@@ -11,11 +11,15 @@ $(document).ready(function () {
     $('#body').css('width', window.innerWidth);
     
     var backTime; //返回首页计时
-    $(document).click(function(){  
-        kit.setTimerout(backTime,180*1000,function(){
-        	$('#slideshow').show();
-        }) 
-    });
+    document.onmousedown = function(event){
+
+    }
+    // $("div").click(function(){
+    //     kit.clearTimerout(backTime);
+    //     kit.setTimerout(backTime,10*1000,function(){
+    //     	slideshow.show();
+    //     }) 
+    // });
     //获取轮播图
     slideshow.init(function(flag){
        slideshow.show(); 

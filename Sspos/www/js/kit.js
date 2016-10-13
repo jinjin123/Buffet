@@ -55,7 +55,7 @@
         }, time);
     }
     ret.clearTimerout = function (val) {
-        clearTimeout(val);
+        val = clearTimeout(val);
     }
     ret.setTimerInterval = function (val,time,fun) {
         val = setInterval(function () {
@@ -65,7 +65,27 @@
         },time)
     }
     ret.clearTimerInterval = function (val) {
-        clearTimeout(val);
+       val = clearInterval(val);
+    }
+    ret.getInt = function (num) {
+        return String(Math.floor(num)) + '.';
+    }
+    ret.getDecimal = function (num) {
+        var num1 = num;
+        var num2 = Math.floor(num);
+        var num3 = (num1*100) - (num2*100) ;
+        if(String(num3).indexOf('.') == -1){
+            if(num3==0){
+                num3=num3+"0";
+            }
+            return String(num3);
+        }else{
+            num3 = num3 * 100;
+            if(num3==0){
+                num3=num3+"0";
+            }
+            return String(num3);
+        }
     }
     return ret;
 })();

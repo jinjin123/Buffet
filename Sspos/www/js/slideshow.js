@@ -82,4 +82,9 @@ slideshow = (function () {
 $('#container').on('click',function(){
 	slideshow.hide();
 	product.show();
+    cart.clearCartList();
+    clearCartDom();
+    $(".cart").children().remove();
+    $(".totalamout").html('0.00');
+    localStorage.setItem("istakeout",1);
 })
