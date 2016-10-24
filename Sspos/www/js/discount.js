@@ -8,5 +8,9 @@
     ret.getDiscount = function () {
         return (1 - discount);
     };
+    ret.getDiscountList = function () {
+        var discount = [];
+        return discount;
+    }
     return ret;
 })();

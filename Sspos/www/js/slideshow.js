@@ -11,6 +11,9 @@ slideshow = (function () {
     	$('#container').show();
     	$('.circle').show();
     	$('.circle2').show();
+        cart.clearCartList();
+        $('.cart').children().remove();
+        $('.orderproductlist').children().remove();
     }
     //隐藏轮播图
     ret.hide = function(){

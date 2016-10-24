@@ -13,14 +13,10 @@
   background-color: none;
 }
 html body {
-    -webkit-touch-callout: none;
-    -ms-content-zooming:none;
-    -webkit-text-size-adjust: none;
     user-select: none;
     -moz-user-select:none;
     -webkit-user-select: none;
     -ms-user-select:none;
-    -ms-touch-select:none;
     position: relative;
     background-attachment:fixed;
     font-size:12px;
@@ -31,4 +27,5 @@ html body {
     width:100%;
     background-color:#fff;
     font-family:"Microsoft Yahei", serif;
+    letter-spacing: 1px;
 }

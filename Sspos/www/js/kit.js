@@ -48,6 +48,7 @@
     };
 
     ret.setTimerout = function (val,time,fun) {
+        ret.clearTimerout(val);
         val = setTimeout(function () {
             if (fun && (typeof (fun) == "function")) {
                 fun();
@@ -58,6 +59,7 @@
         val = clearTimeout(val);
     }
     ret.setTimerInterval = function (val,time,fun) {
+        ret.clearTimerInterval(val);
         val = setInterval(function () {
             if (fun && (typeof (fun) == "function")) {
                 fun();

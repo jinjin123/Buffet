@@ -1,31 +1,23 @@
+var backTime,paytip,paytime,inquiry;
 $(document).ready(function () {
 	
     sql.opendb();
-    // sql.createTable(); //第一次打开程序时执行此方法一次
+    //sql.createTable(); //第一次打开程序时执行此方法一次
     // sql.ipc();
     // sql.isi();
     // sql.ipt();
-    slideshow.hide(); 
-    product.init();
     $('#body').css('height', window.innerHeight);
     $('#body').css('width', window.innerWidth);
-    
-    var backTime; //返回首页计时
+    product.init();
     document.onmousedown = function(event){
 
     }
-    // $("div").click(function(){
-    //     kit.clearTimerout(backTime);
-    //     kit.setTimerout(backTime,10*1000,function(){
-    //     	slideshow.show();
-    //     }) 
-    // });
     //获取轮播图
     slideshow.init(function(flag){
        slideshow.show(); 
     });
-    //轮播图
-    kit.setTimerout("slideshow",5*1000,function(){
+    //轮播图 轮播
+    //kit.setTimerout("slideshow",5*1000,function(){
         const TWO_PI = Math.PI * 2;
 
         var images = [], 
@@ -275,5 +267,5 @@ $(document).ready(function () {
                 this.ctx.restore();
             }
         };
-    }) 
+   // }) 
 } );

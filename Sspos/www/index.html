@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta charset="utf-8" />
 	<meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -13,94 +14,171 @@
 </head>
 <html>
 	<body id="body">
-	<!--slideshow -->
-	<div id="container"></div>
-    <div class="circle"></div>
-    <div class="circle2"></div>
+		<!--slideshow -->
+		<div id="container"></div>
+	    <div class="circle"></div>
+	    <div class="circle2"></div>
 
-	<!--products -->
-    <div id="product" class="container">
-	    <div class="row">
-	    	<div id="proleft" class="col-md-2">
-	    		<div id="storelogo" class="col-md-12">
-	    			<img src="images/logo.png">
-	    		</div>
-	    		<div id="category" class="col-md-12">
-	    		</div>
-	    	</div>
-	    	<div id="promiddle" class="col-md-7">
-	    		<div class="col-md-12 banner">
-	    			<img src="images/banner.png">
-	    		</div>
-	    		<div class="col-md-12 products">
+		<!--products -->
+	    <div id="product" class="container">
+		    <div class="row">
+		    	<div id="proleft" class="col-md-2">
+		    		<div id="storelogo" class="col-md-12">
+		    			<img src="images/logo.png">
+		    		</div>
+		    		<div id="category" class="col-md-12">
+		    		</div>
+		    	</div>
+		    	<div id="promiddle" class="col-md-7">
+		    		<div class="col-md-12 banner">
+		    			<img src="images/banner.png">
+		    		</div>
+		    		<div class="col-md-12 products">
 
-	    		</div>
-	    		<div class="reproducts">
-	    			<div class="reclose"></div>
-	    			<div class="col-md-12 recontent">
+		    		</div>
+		    		<div class="reproducts">
+		    			<div class="reclose"></div>
+		    			<div class="col-md-12 recontent">
 
-	    			<div class="imgleft"><img src="images/left.png"></div>
-	    			<div class="imgright"><img src="images/right.png"></div>
-	    				<div class="remiddle">
-	    					<div class="reproduct">
-	    						<div class="content"></div>
-	    						<div class="btn"></div>
+		    			<div class="imgleft"><img src="images/left.png"></div>
+		    			<div class="imgright"><img src="images/right.png"></div>
+		    				<div class="remiddle">
+		    					<div class="reproduct">
+		    						<div class="content"></div>
+		    						<div class="btn"></div>
+		    					</div>
+		    					<div class="reproduct"></div>
+		    					<div class="reproduct"></div>
+		    					<div class="reproduct"></div>
+		    				</div>
+		    			</div>
+		    		</div>
+		    	</div>
+		    	<div id="proright" class="col-md-3">
+		    		<div class="col-md-12 cartTitle">
+		    			<div class="col-md-12 cartimage"></div>
+		    			<div class="col-md-12 cartclear">
+		    				<div class="col-md-8 istakeout">外带</div>
+		    				<div class="col-md-4 clear">清空</div>
+		    			</div>
+		    		</div>
+		    		<div class="col-md-12 cart">
+
+		    		</div>
+		    		<div class="col-md-12 total">
+		    		<span class="totaltitle">总计&nbsp;&nbsp;&nbsp;</span><span class="totalamout">0.00</span>
+		    		</div>
+		    		<div class="col-md-12 cartpay">付 款</div>
+		    	</div>
+		    </div>
+	    </div>
+
+	    <!--order -->
+	    <div id="order" class="container">
+	    	<div class="col-md-3 odrleft">
+	    		<div class="col-md-12 ordertitle">当前订单（外带）</div>
+	    		<div class="col-md-12 orderamout">
+	    			<div class="col-md-12 orderamoutdetail">
+	    				<div class="col-md-12 odrrealpay">
+	    					<span class="realpayamout col-md-12">&yen;&nbsp;00.00</span>
+	    					<span class="col-md-12">您需支付</span>
+	    				</div>
+	    				<div class="col-md-12 odrdiscount">
+	    					<div class="col-md-6 discountdtl">
+	    						<span class=" col-md-12 discountpay">&yen;&nbsp;00.00</span>
+	    						<span class="col-md-12">已优惠</span>
 	    					</div>
-	    					<div class="reproduct"></div>
-	    					<div class="reproduct"></div>
-	    					<div class="reproduct"></div>
+	    					<div class="col-md-6 totaldtl">
+	    						<span class=" col-md-12 totalpay">&yen;&nbsp;00.00</span>
+	    						<span class="col-md-12">合计</span>
+	    					</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="col-md-12 orderproductlist">
+
+	    		</div>
+	    		<div class="col-md-12 backproduct">返回点餐</div>
+	    	</div>
+	    	<div class="col-md-9 odrright">
+	    		<div class="col-md-12 topay">
+	    			<div class="col-md-12 topaytitle">
+	    				<div class="col-md-12 paytitle">
+	    					<div class="paystep1">选择支付方式</div>
+	    					<div class="point1"></div>
+	    					<div class="paystep2">扫一扫付款</div>
+	    					<div class="point2"></div>
+	    					<div class="paystep3">付款成功</div>
+	    				</div>
+	    			</div>
+	    			<div class="col-md-12 choosepay">
+	    			 <div class="col-md-12 choosepayicon">
+	    			 	<img src="images/mobile-c.png">
+	    			 </div>
+	    			 <div class="col-md-12 choosepayname">请选择支付方式</div>
+	    			 <div class="col-md-12 paymentmethod">
+	    			 <div class="payment">
+	    			 <div id="alipay" class="paymentinfo" data="alipay.trade.precreate"><span></span></div>
+	    			 </div>
+	    			 <div class="payment"><div id="wechatpay" class="paymentinfo" data="NATIVE"></div></div> 
+	    			 </div>
+	    			</div>
+	    			<div class="col-md-12 protect">
+	    				<div class="col-md-12 paylogo">
+	    					<img src="images/zfb-lg.png">
+	    				</div>
+	    				<div class="col-md-12 qrcode">
+	    					<div id="code" class="code"></div>
+	    				</div>
+	    				<div class="col-md-12 payamout">&yen;&nbsp;0.00</div>
+	    				<div class="col-md-12 paytip">
+	    					<img src="images/saoyisao.png">
+	    					<span class="tip">
+	    						<span class="tipname">打开手机支付宝</span><br/>
+	    						<span>扫一扫继续付款</span>
+	    					</span>
+	    				</div>
+	    				<div class="col-md-12 paybtn">
+	    					<div class="cancelpay">取消支付</div>
+	    					<div class="okpay">我已付款</div>
+	    				</div>
+	    				<div class="logo"></div>
+	    				<div class="logo2"></div>
+	    			</div>
+	    			<div class="col-md-12 payresult">
+	    				<div class="col-md-12 payresultlogo">
+	    					恭喜您付款成功！
+	    				</div>
+	    				<div class="col-md-12 payresultcontent">
+	    					取餐号:&nbsp;0000
+	    				</div>
+	    				<div class="col-md-12 payresultbtn">
+	    					<div class="col-md-12 payresulttip">温馨提示：请凭小票到柜台取餐,如有问题请联系餐厅服务人员</div>
+	    					<div class="backindex">返回首页</div>
 	    				</div>
 	    			</div>
 	    		</div>
 	    	</div>
-	    	<div id="proright" class="col-md-3">
-	    		<div class="col-md-12 cartTitle">
-	    			<div class="col-md-12 cartimage"></div>
-	    			<div class="col-md-12 cartclear">
-	    				<div class="col-md-8 istakeout">外带</div>
-	    				<div class="col-md-4 clear">清空</div>
-	    			</div>
-	    		</div>
-	    		<div class="col-md-12 cart">
-
-	    		</div>
-	    		<div class="col-md-12 total">
-	    		<span class="totaltitle">总计&nbsp;&nbsp;&nbsp;</span><span class="totalamout">0.00</span>
-	    		</div>
-	    		<div class="col-md-12 cartpay">付 款</div>
-	    	</div>
 	    </div>
-    </div>
-
-    <!--order -->
-    <div id="order" class="container">
-    	<div class="col-md-3 odrleft">
-    		<div></div>
-    		<div></div>
-    		<div></div>
-    		<div></div>
-    	</div>
-    	<div class="col-md-9 odrright">
-    		<div class="col-md-12 choosepay"></div>
-    	</div>
-    </div>
-
-	<script type="text/javascript" src="js/static/jquery-3.0.0.min.js"></script>
-	<script type="text/javascript" src="js/static/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/static/md5.js"></script>
-	<script type="text/javascript" src="js/shoppingCart.js"></script>
-	<script type="text/javascript" src="js/discount.js"></script>
-	<script type="text/javascript" src="js/config.js"></script>
-	<script type="text/javascript" src="js/kit.js"></script>
-	<script type="text/javascript" src="js/ajax.js"></script>
-	<script type="text/javascript" src="js/de.js"></script>
-	<script type="text/javascript" src="js/mkt.js"></script>
-	<script type="text/javascript" src="js/sql.js"></script>
-	<script type="text/javascript" src='js/delaunay.js'></script> 
-	<script type="text/javascript" src='js/TweenMax.js'></script>
-	<script type="text/javascript" src="js/slideshow.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
-	<script type="text/javascript" src="js/product.js"></script>
-	<script type="text/javascript" src="js/order.js"></script>
+		<script type="text/javascript" src="js/static/jquery-3.0.0.min.js"></script>
+		<script type="text/javascript" src="js/static/jquery.qrcode.min.js"></script>
+		<script type="text/javascript" src="js/static/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/static/md5.js"></script>
+		<script type="text/javascript" src="js/shoppingCart.js"></script>
+		<script type="text/javascript" src="js/discount.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/kit.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script type="text/javascript" src="js/de.js"></script>
+		<script type="text/javascript" src="js/mkt.js"></script>
+		<script type="text/javascript" src="js/sql.js"></script>
+		<script type="text/javascript" src="js/pmt.js"></script>
+		<script type="text/javascript" src="js/oc.js"></script>
+		<script type="text/javascript" src='js/delaunay.js'></script> 
+		<script type="text/javascript" src='js/TweenMax.js'></script>
+		<script type="text/javascript" src="js/slideshow.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/product.js"></script>
+		<script type="text/javascript" src="js/order.js"></script>
 	</body>
 </html>

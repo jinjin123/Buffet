@@ -22,6 +22,7 @@ product = (function () {
 				'padding-left': '75px !important'
 			});
 			$('.istakeout').html("堂食");
+			$('.ordertitle').html("当前订单（堂食）");
 		}
 		$("#product").show();
 		$('#frist').click();
@@ -234,8 +235,10 @@ product = (function () {
 
 	        } else if (pdtCartInfo.productnum == 0) {
 	            $("#" + pdtCartInfo.productid).remove();
+	            $("." + pdtCartInfo.productid).remove();
 	        } else if (pdtCartInfo.productnum >= 1) {
 	            if (newPdt == true) {
+	            	//产品页面购物车
 	                var html =  '<div class="col-md-12 cartpro" id="'+pdtCartInfo.productid+'">'+
 				    				'<div class="col-md-3 cartproimg">'+
 				    					'<img src="'+pdtCartInfo.productimg +'">'+
@@ -258,12 +261,30 @@ product = (function () {
 										'</div>'+
 				    				'</div>'+
 				    				'<div class="delpdt"></div>'+
-				    			'</div>'
+				    			'</div>';
+				    //订单页面购物车
+				    var html2 ='<div class="col-md-12 orderproduct '+pdtCartInfo.productid+'">'+
+				    				'<div class="col-md-2 orderimg">'+
+				    					'<img src="'+pdtCartInfo.productimg+'">'+
+				    				'</div>'+
+				    				'<div class="col-md-10 ordername">'+
+				    					'<span class="col-md-9 name">'+pdtCartInfo.productname+'</span>'+
+				    					'<span class="col-md-9 price">&yen;&nbsp;'+pdtCartInfo.productprice+'</span>'+
+				    					'<span class="col-md-3 num">x'+pdtCartInfo.productnum+'</span>'+
+				    				'</div>'+
+				    			'</div>';
 	                var cartParent = $(".cart");
 	                $(cartParent).undelegate();
 	                var child = $(html);
+
+	                var ordercartParent = $(".orderproductlist");
+	                $(ordercartParent).undelegate();
+	                var orderchild = $(html2);
+
 	                if (pdtInfo) {
 	                    $(child).data("cartPdtInfo", pdtInfo);
+
+	                    $(orderchild).data("cartPdtInfo", pdtInfo);
 	                }
 	               
 	                if ($(cartParent).children().length > 0) {
@@ -271,11 +292,20 @@ product = (function () {
 	                } else {
 	                    $(cartParent).append(child);
 	                }
+
+	                if ($(ordercartParent).children().length > 0) {
+	                    $(ordercartParent).children().eq(0).before(orderchild);
+	                } else {
+	                    $(ordercartParent).append(orderchild);
+	                }
+
+
 	                addCartMinusEvent(cartParent);
 	                addCartAddEvent(cartParent);
 	                addCartDelEvent(cartParent);
 	            } else {
 	                $("#" + pdtCartInfo.productid).find('.nums').html('<input type="checkbox">'+pdtCartInfo.productnum);
+	                $("." + pdtCartInfo.productid).find('.num').html('x'+pdtCartInfo.productnum);
 	            }
 	        }
 	        totalAmout();
@@ -285,6 +315,15 @@ product = (function () {
 	function totalAmout () {
 		var staticInfo = cart.getStaticInfo();
 		$('.totalamout').html(kit.getInt(staticInfo.total)+""+kit.getDecimal(staticInfo.total));
+		$('.totalpay').html("&yen;&nbsp;"+kit.getInt(staticInfo.total)+""+kit.getDecimal(staticInfo.total));
+
+
+		$('.realpayamout').html("&yen;&nbsp;"+kit.getInt(staticInfo.realpay)+""+kit.getDecimal(staticInfo.realpay));
+
+
+		$('.discountpay').html("&yen;&nbsp;"+kit.getInt(staticInfo.discount)+""+kit.getDecimal(staticInfo.discount));
+
+		$('.payamout').html("&yen;&nbsp;"+kit.getInt(staticInfo.realpay)+""+kit.getDecimal(staticInfo.realpay));
 	}
 	//减少产品
 	function addCartMinusEvent(p) {
@@ -312,6 +351,7 @@ product = (function () {
 //清除购物车dom
 function clearCartDom (){
 	$(".cart").children().remove();
+	$(".orderproductlist").children().remove();
 	$(".totalamout").html('0.00');
 }
 //关闭换购模态框
@@ -339,6 +379,7 @@ $('.istakeout').on('click',function(){
 			'padding-left': '75px !important'
 		});
 		$('.istakeout').html("外带");
+		$('.ordertitle').html("当前订单（外带）");
 		localStorage.setItem('istakeout',1);
 	}else{
 		$('.istakeout').css({
@@ -352,6 +393,7 @@ $('.istakeout').on('click',function(){
 			'padding-left': '75px !important'
 		});
 		$('.istakeout').html("堂食");
+		$('.ordertitle').html("当前订单（堂食）");
 		localStorage.setItem('istakeout',0);
 	}
 });

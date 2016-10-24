@@ -5,44 +5,23 @@ config = (function () {
     ret.DE_URL = "http://de.zkungfu.com/api/";
     ret.DE_CODE = "?token=ef5940407a519f7e0f566bbfb2230a0331840275&security_code=testapi";
     //oc
-    ret.OC_URL = "http://172.16.103.192:8080/";
-    ret.ACCESS_TOKEN = "hty4B91i8S02je45FL07AnN29UB7Hu2mZ2t1864Hk29Oji06M1397212281Th717";
+    ret.OC_URL = "http://172.16.104.97:9000/";
+    ret.ACCESS_TOKEN = "481A0y0722G721S5p21853gNNnc583N9DUZ4f90995lQbl6pGw229zA1652P2h56";
     //mkt
     ret.MKT_URL = "http://mkt.zkungfu.com/api/marketing/";
     //crm
     ret.CRM_URL = "http://crm.zkungfu.com/zkf-crm/api/";
     ret.CRM_ACCESSTOKEN ="W/bkcCjGNmzjS/l6DTwxDA==";
     //pmt
-    ret.PMT_URL = "http://pmt.zkungfu.com/api/";
-    ret.KEY = "8a970a5f2835ad6ba323db0e73aee6f1";
-    ret.PMT_SECURITY = "369c9360b966d3a4e4154fbc96efe0f0";
-
-
-
-
-
-
-
-
-
-
-
-
-    //bus
-    ret.bus_ip = "172.17.251.2";
-    ret.ssPosName = "ssPos01";
-    ret.ssBusToken = "6b36bd5e0d084441a0ec818bb50f4306";
-    ret.printerName = "printer01";
-
-
-    //TPOS
-    ret.SUBPOS_URL = "http://192.168.1.124:9002";
+    ret.PMT_URL = "http://payment.sparkpos.cn/api/";
+    ret.PMT_KEY = "naWNUNW5pzmzISiGaHPBgMgtr";
+    ret.PMT_SECURITY = "5bpjjQWp26cll0ixzKKHZOLnt";
 
     ret.VERSION = "windows1.01";
     ret.TYPE = "SS";  //机器类型
     ret.ID = "01";
     ret.STORENAME = "";
-    ret.STOREID = "CN757023";
+    ret.STOREID = "HQ020001";
     ret.address_detail = "";
     ret.phone = "15710652956";
 

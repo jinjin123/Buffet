@@ -8,7 +8,10 @@
 }
 .odrleft{
 	background-color: #07111d;
-	padding: 0 !important;
+	padding-top: 30px !important;
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	padding-bottom: 20px !important;
 	height: 100%;
 }
 .odrright{
@@ -18,8 +21,414 @@
 	padding-right: 0px !important;
 	height: 100%;
 }
-.choosepay{
+.topay{
 	padding: 0px !important;
 	background-color: #07111d;
 	height: 100%;
+}
+.ordertitle{
+	padding: 0 !important;
+	height: 32px;
+	background-image: url('../images/list.png');
+	background-position: left;
+	background-repeat: no-repeat;
+	text-align: center;
+	font-size: 30px;
+	line-height: 32px;
+	color: #fff;
+}
+.orderamout{
+	margin-top: 26px;
+	margin-bottom: 10px;
+	padding-left: 70px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 70px !important;
+	height: 182px;
+}
+.orderamoutdetail{
+	padding-left: 20px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 20px !important;
+	height: 182px;
+}
+.odrrealpay{
+	padding-left: 0px !important;
+	padding-bottom: 5px !important;
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+	border-bottom: 1px solid #fff;
+	height: 89px;
+	text-align: center;
+	color: #fff;
+	font-size: 20px;
+}
+.odrrealpay>span{
+	padding: 0 !important;
+	display: inline-block;
+	height: 29px;
+}
+.realpayamout{
+	font-size: 50px;
+	height: 55px !important;
+	line-height: 55px;
+}
+.odrdiscount{
+	height: 90px;
+	padding-left: 0px !important;
+	padding-bottom: 10px !important;
+	padding-top: 10px !important;
+	padding-right: 0px !important;
+	text-align: center;
+}
+.discountdtl,.totaldtl{
+	height: 70px;
+	font-size: 20px;
+	color: #fff;
+}
+.discountdtl{
+	border-right:1px solid #fff;
+}
+.discountdtl>span,.totaldtl>span{
+	padding: 0 !important;
+	display: inline-block;
+}
+.discountpay,.totalpay{
+	font-size: 26px;
+}
+.orderproductlist{
+	padding: 0px !important;
+	margin-bottom: 20px;
+	height: 620px;
+	overflow-y: scroll;
+	color: #628ab2;
+}
+.orderproduct{
+	height: 80px;
+	padding-left: 10px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 10px !important;
+	margin-bottom: 2px;
+	background-color: #fff;
+}
+.orderimg{
+	height: 80px;
+	padding: 0 !important;
+	line-height: 80px;
+}
+.orderimg>img{
+	height: 72px;
+	width: 72px;
+}
+.ordername{
+	height: 80px;
+	padding-left: 20px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+	font-size: 20px;
+}
+.ordername>.name{
+	font-size: 20px;
+	padding-left: 00px !important;
+	padding-bottom: 0px !important;
+	padding-top: 3px !important;
+	padding-right: 0px !important;
+	height: 55px;
+	white-space:normal; 
+	word-break:break-all;
+	text-align: left;
+}
+.ordername>.price{
+	font-size: 18px !important;
+	padding: 0 !important;
+	height: 25px;
+	text-align: left;
+}
+.ordername>.num{
+	font-size: 22px;
+	padding: 0 !important;
+	height: 25px;
+	line-height: 25px;
+	text-align: right;
+}
+.backproduct{
+	padding: 0 !important;
+	height: 100px;
+	text-align: center;
+	line-height: 100px;
+	background-color: #ffb600;
+	color: #fefefe;
+	font-size: 36px;
+}
+.topaytitle{
+	height: 170px;
+	padding-left: 95px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 95px !important;
+}
+.paytitle{
+	height: 170px;
+	padding-left: 280px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+	text-align: center;
+	border-bottom: 3px solid #303549;
+}
+.paystep1,.paystep2,.paystep3{
+	height: 150px;
+	width: 150px;
+	margin-top: 17px;
+	padding-top: 100px;
+	font-size: 24px;
+	color: #6a7077;
+	float: left;
+}
+.paystep1{
+	background-image: url('../images/xuanzezhifu.png');
+	background-repeat: no-repeat;
+	background-position: center 20px;
+	color:#fff;
+}
+.paystep2{
+	background-image: url('../images/saoma-disabled.png');
+	background-repeat: no-repeat;
+	background-position: center 20px;
+}
+.paystep3{
+	background-image: url('../images/pay-success-disabled.png');
+	background-repeat: no-repeat;
+	background-position: center 20px;
+}
+.point1{
+	height: 150px;
+	width: 100px;
+	background-image: url('../images/point.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	float: left;
+}
+.point2{
+	height: 150px;
+	width: 100px;
+	background-image: url('../images/point-disabled.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	float: left;
+}
+/*选择支付方式*/
+.choosepay{
+	display: none;
+	height: 870px;
+	padding: 0 !important;
+}
+.choosepayicon{
+	height: 72px;
+	padding: 0 !important;
+	margin-top: 40px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.choosepayicon>img{
+	height: 72px;
+	width: 72px;
+}
+.choosepayname{
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	text-align: center;
+	font-size: 48px;
+	padding: 0 !important;
+	margin-bottom: 72px;
+}
+.paymentmethod{
+	padding-left: 0px !important;
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+	height: 616px;
+	text-align: center;
+}
+.payment{
+	height: 240px;
+	width: 340px;
+	margin: 0 auto;
+	display: inline-block;
+}
+.paymentinfo{
+	height: 200px;
+	width: 300px;
+	margin: 20px 20px 20px 20px;
+	background-color: #fff;
+	border-radius: 8px;
+}
+#alipay{
+	background-image: url('../images/alipay.png');
+	background-position: center;
+	background-repeat: no-repeat;
+}
+#wechatpay{
+	background-image: url('../images/wechat.png');
+	background-position: center;
+	background-repeat: no-repeat;
+}
+/*开始支付*/
+.protect{
+	display: none;
+	height: 870px;
+	padding: 0 !important;
+	position: relative;
+}
+.paylogo{
+	height: 100px;
+	padding: 0 !important;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	text-align: center;
+}
+.paylogo>img{
+	height: 100px;
+	width: 286px;
+}
+.qrcode{
+	height: 300px;
+	padding: 0 !important;
+	margin-bottom: 40px;
+}
+.qrcode>.code{
+	height: 300px;
+	width: 300px;
+	border-radius: 50%;
+	margin: 0 auto;
+	background-image: url('../images/qr-code-bg.png');
+	background-repeat: no-repeat;
+}
+.payamout{
+	height: 65px;
+	line-height: 65px;
+	padding: 0 !important;
+	text-align: center;
+	font-size: 60px;
+	color: #fff;
+	margin-bottom: 20px;
+}
+.paytip{
+	height: 75px;
+	text-align: center;
+	color: #fff;
+	font-size: 28px;
+	margin-bottom: 50px;
+}
+.paytip>img{
+	position: absolute;
+	bottom: 2px;
+	left: 563px;
+	height: 60px;
+	width: 68px;
+	margin-right: 20px;
+}
+.paytip>.tip{
+	display: inline-block;
+	position: absolute;
+	left: 653px;
+	width: 200px
+	height: 75px;
+}
+.tip>span{
+
+	display: inline-block;
+}
+.paybtn{
+	height: 100px;
+	padding: 0 !important;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.cancelpay,.okpay{
+	display: inline-block;
+	text-align: center;
+	font-size: 36px;
+	color: #fff;
+	height: 100px;
+	line-height: 100px;
+	margin-left: 20px;
+	margin-right: 20px;
+	width: 320px;
+	background-color: #ffb600;
+}
+.logo{
+	position: absolute;
+	right: 100px;
+	top: 40px;
+	height: 300px;
+	width: 330px;
+	background-image: url('../images/step1.png');
+	background-repeat: no-repeat;
+}
+.logo2{
+	position: absolute;
+	right: 100px;
+	top: 40px;
+	height: 300px;
+	width: 330px;
+	background-image: url('../images/step2.png');
+	background-repeat: no-repeat;
+}
+/*支付结果*/
+.payresult{
+	display: none;
+	height: 870px;
+	padding: 0 !important;
+	position: relative;
+}
+.payresultlogo{
+	height: 350px;
+	padding: 0 !important;
+	margin-top: 50px;
+	text-align: center;
+	background-image: url('../images/success.png');
+	background-repeat: no-repeat;
+	background-position: 565px 0px;
+	background-size: 250px;
+	font-size: 36px;
+	color: #fff;
+	line-height: 600px;
+}
+.payresultcontent{
+	height: 298px;
+	line-height: 298px;
+	color: #fff;
+	text-align: center;
+	font-size: 36px;
+}
+.payresultbtn{
+	padding-left: 0px !important;
+	padding-bottom: 20px !important;
+	padding-top: 0px !important;
+	padding-right: 0px !important;
+	height: 170px;
+	text-align: center;
+}
+.payresulttip{
+	height: 30px;
+	font-size: 20px;
+	line-height: 30px;
+	color: #fff;
+	text-align: center;
+}
+.backindex{
+	margin-top: 20px;
+	display: inline-block;
+	text-align: center;
+	font-size: 36px;
+	color: #fff;
+	height: 100px;
+	line-height: 100px;
+	width: 320px;
+	background-color: #ffb600;
 }
