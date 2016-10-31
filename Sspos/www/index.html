@@ -14,6 +14,19 @@
 </head>
 <html>
 	<body id="body">
+		<div class="backtip">
+			正在等待操作,<span id="m">15</span>秒后自动返回首页
+		</div>
+		<div class="mypaytip">
+			正在等待支付,<span id="paym">03:00</span>后自动取消支付
+		</div>
+		<div class="afterpay">
+			正在等待操作,<span id="apaym">20</span>秒后自动返回首页
+		</div>
+		<div class="internet">
+			网络出现异常,正常尝试重连... 请联系餐厅服务员
+		</div>
+		<div class="error"></div>
 		<!--slideshow -->
 		<div id="container"></div>
 	    <div class="circle"></div>
@@ -45,11 +58,20 @@
 		    				<div class="remiddle">
 		    					<div class="reproduct">
 		    						<div class="content"></div>
-		    						<div class="btn"></div>
+		    						<div class="rebtn">更换</div>
 		    					</div>
-		    					<div class="reproduct"></div>
-		    					<div class="reproduct"></div>
-		    					<div class="reproduct"></div>
+		    					<div class="reproduct">
+		    						<div class="content"></div>
+		    						<div class="rebtn">更换</div>
+		    					</div>
+		    					<div class="reproduct">
+		    						<div class="content"></div>
+		    						<div class="rebtn">更换</div>
+		    					</div>
+		    					<div class="reproduct">
+		    						<div class="content"></div>
+		    						<div class="rebtn">更换</div>
+		    					</div>
 		    				</div>
 		    			</div>
 		    		</div>
@@ -160,6 +182,9 @@
 	    		</div>
 	    	</div>
 	    </div>
+	    <script>
+			if (typeof module === 'object') {window.module = module; module = undefined;}
+		</script>
 		<script type="text/javascript" src="js/static/jquery-3.0.0.min.js"></script>
 		<script type="text/javascript" src="js/static/jquery.qrcode.min.js"></script>
 		<script type="text/javascript" src="js/static/bootstrap.min.js"></script>

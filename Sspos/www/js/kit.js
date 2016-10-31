@@ -1,4 +1,6 @@
-﻿kit = (function () {
+﻿var backindex,backtip,paytip,paytime,inquiry,topay,afterpayindextip,afterpayindex;
+var backtime = 180*1000,afterpayindextime = 20*1000;
+kit = (function () {
     'use strict';
     var ret = {};
     ret.numstr = function (nums) {
@@ -46,7 +48,86 @@
         }  
         return false;  
     };
-
+    //返回首页倒计时
+    ret.backindexTime = function() {
+    	var times = 0;
+    	$('.backtip').slideUp(800);
+    	$('#m').html("15");
+    	clearTimeout(backindex);
+    	clearInterval(backtip);
+    	backtip = setInterval(function (){
+    		times ++;
+    		if(times >= (backtime/1000-15) && times < backtime/1000) {
+    			$('.backtip').slideDown(800);
+    			$('#m').html(backtime/1000-times);
+    		}else if(times == backtime/1000) {
+    			clearInterval(backtip);
+    			$('.backtip').slideUp(800);
+    			$('#m').html("0");
+    		}
+    	}, 1000);
+		backindex = setTimeout(function () {
+	        slideshow.show();
+	        product.hide();
+	        order.hide();
+	    }, backtime);
+    }
+    //清除返回首页倒计时
+    ret.clearbackindexTime = function() {
+    	clearTimeout(backindex);
+    	clearInterval(backtip);
+    	$('.backtip').slideUp(800);
+    	$('#m').html("15");
+    }
+    //有效支付时间倒计时
+    ret.payTime = function() {
+    	var topaytime = 180;
+    	clearInterval(topay);
+    	$('.mypaytip').slideDown(800);
+    	topay = setInterval(function () {
+    		$('#paym').html(kit.parseTime(Math.floor(topaytime / 60)) + ":" + kit.parseTime(topaytime % 60));
+        	topaytime--;
+        	if(topaytime <=0 ){
+        		clearInterval(topay);
+        		$('.mypaytip').slideUp(800);
+        		$('#paym').html("00:00");
+        	}
+    	},1000);
+    }
+    //清除有效支付时间倒计时
+	ret.clearpayTime = function() {
+    	clearInterval(topay);
+    	$('.mypaytip').slideUp(800);
+    	$('#paym').html("00:00");
+    }
+    //支付成功返回首页倒计时
+    ret.afterpayTime = function() {
+    	var paytimes = 20;
+    	$('.afterpay').slideDown(800); 
+    	clearTimeout(afterpayindex);
+    	clearInterval(afterpayindextip);
+    	afterpayindextip = setInterval(function () {
+    		$('#apaym').html(paytimes);
+    		paytimes --;
+    		if(paytimes <= 0){
+    			clearInterval(afterpayindextip);
+    			$('.afterpay').slideUp(800);
+    			$('#apaym').html("20");
+    		}
+    	},1000);
+    	afterpayindex = setTimeout(function () {
+	        slideshow.show();
+	        product.hide();
+	        order.hide();
+	    }, afterpayindextime);
+    }
+    //清除支付成功返回首页倒计时
+    ret.clearafterpayTime = function() {
+    	clearTimeout(afterpayindex);
+    	clearInterval(afterpayindextip);
+		$('.afterpay').slideUp(800);
+		$('#apaym').html("20");
+    }
     ret.setTimerout = function (val,time,fun) {
         ret.clearTimerout(val);
         val = setTimeout(function () {
@@ -69,6 +150,7 @@
     ret.clearTimerInterval = function (val) {
        val = clearInterval(val);
     }
+
     ret.getInt = function (num) {
         return String(Math.floor(num)) + '.';
     }

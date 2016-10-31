@@ -163,6 +163,7 @@
 	color: #fefefe;
 	font-size: 36px;
 }
+.backproduct:active{opacity:0.3;}
 .topaytitle{
 	height: 170px;
 	padding-left: 95px !important;
@@ -267,6 +268,7 @@
 	background-color: #fff;
 	border-radius: 8px;
 }
+.paymentinfo:active{opacity:0.3;}
 #alipay{
 	background-image: url('../images/alipay.png');
 	background-position: center;
@@ -361,6 +363,7 @@
 	width: 320px;
 	background-color: #ffb600;
 }
+.cancelpay:active,.okpay:active{opacity:0.3;}
 .logo{
 	position: absolute;
 	right: 100px;
@@ -416,7 +419,7 @@
 }
 .payresulttip{
 	height: 30px;
-	font-size: 20px;
+	font-size: 24px;
 	line-height: 30px;
 	color: #fff;
 	text-align: center;
@@ -432,3 +435,4 @@
 	width: 320px;
 	background-color: #ffb600;
 }
+.backindex:active{opacity:0.3;}

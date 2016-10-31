@@ -1,5 +1,4 @@
-﻿
-::-webkit-scrollbar {
+﻿::-webkit-scrollbar {
     width: 0px;
 }
 ::-webkit-scrollbar-track {
@@ -13,19 +12,89 @@
   background-color: none;
 }
 html body {
-    user-select: none;
-    -moz-user-select:none;
     -webkit-user-select: none;
-    -ms-user-select:none;
     position: relative;
     background-attachment:fixed;
     font-size:12px;
-    height:100%;
     margin:0px;
     padding:0px;
     text-transform:uppercase;
-    width:100%;
     background-color:#fff;
     font-family:"Microsoft Yahei", serif;
     letter-spacing: 1px;
+}
+.backtip{
+    height: 100px;
+    width: 700px;
+    background-color: #fff;
+    position: absolute;
+    top: 0px;
+    z-index: 1000;
+    opacity: 0.7;
+    color: red;
+    font-size: 26px;
+    text-align: center;
+    line-height: 100px;
+    margin-left: 610px;
+    margin-right: 610px;
+    border-radius: 20px;
+    display: none;
+}
+.mypaytip{
+    height: 100px;
+    width: 700px;
+    background-color: #fff;
+    position: absolute;
+    top: 0px;
+    z-index: 1000;
+    opacity: 0.7;
+    color: red;
+    font-size: 26px;
+    text-align: center;
+    line-height: 100px;
+    margin-left: 610px;
+    margin-right: 610px;
+    border-radius: 20px;
+    display: none;
+}
+.afterpay{
+    height: 100px;
+    width: 700px;
+    background-color: #fff;
+    position: absolute;
+    top: 0px;
+    z-index: 1000;
+    opacity: 0.7;
+    color: red;
+    font-size: 26px;
+    text-align: center;
+    line-height: 100px;
+    margin-left: 610px;
+    margin-right: 610px;
+    border-radius: 20px;
+    display: none;   
+}
+.internet{
+    height: 100px;
+    width: 700px;
+    background-color: #fff;
+    position: absolute;
+    top: 0px;
+    z-index: 1000;
+    opacity: 0.7;
+    color: red;
+    font-size: 26px;
+    text-align: center;
+    line-height: 100px;
+    margin-left: 610px;
+    margin-right: 610px;
+    border-radius: 20px;
+    display: none; 
+}
+.error{
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    position: absolute;
+    display: none;
 }

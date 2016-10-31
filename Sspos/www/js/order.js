@@ -5,8 +5,14 @@ order = (function() {
 		$('.choosepay').show();
 		$('.backproduct').show();
 		$('.point2').css({
-				'background-image': "url('images/point-disabled.png')"
-			})
+			'background-image': "url('images/point-disabled.png')"
+		})
+		$('.paystep2').css({
+			'background-image': "url('images/saoma-disabled.png')"
+		});
+		$('.paystep3').css({
+			'background-image': "url('images/pay-success-disabled.png')"
+		});
 		clearInterval(paytip);
 		clearTimeout(paytime);
 		paytip = setInterval(function(){
@@ -20,6 +26,9 @@ order = (function() {
 	};
 	ret.hide = function() {
 		$('#order').hide();
+		$('.choosepay').hide();
+		$('.protect').hide();
+		$('.payresult').hide();
 	};
 	//提交订单
 	ret.submitorder = function (paytype,fun) {
@@ -29,7 +38,7 @@ order = (function() {
 				oc.submitOrder(param,function(result){
 					if(result.hasOwnProperty("code")&&result.hasOwnProperty("data")) {
 						if(result.code == 0) {
-							console.log("success: submitorder is ok");
+							console.log("success: submitorder ok");
 							var payparam = pmt.getParam(param);
 							pmt.Charges(payparam,function(_result) {
 								if(_result.hasOwnProperty("code")&&_result.hasOwnProperty("contents")) {
@@ -54,10 +63,17 @@ order = (function() {
 											fun(true,param);
 										}
 									}
+								}else{
+									console.log("error: pmt.Charges error");
+									console.log(_result);
 								}
 							},function(jqXHR, textStatus, errorThrown) {
-
+								console.log("error: pmt.Charges error");
+								console.log(jaXHR);
 							})
+						}else{
+							console.log("error: submitorder error");
+							console.log(result);
 						}
 					}
 				},function(jqXHR, textStatus, errorThrown) {
@@ -65,17 +81,21 @@ order = (function() {
 					console.log("error: submitorder cannot access");
 				});
 			}else{
-				console.log("error: save order is error")
+				console.log("error: save order error")
 			}
 		})
 	}
 	return ret;
 })();
+//返回点餐页面
 $('.backproduct').on('click',function(){
+	kit.backindexTime();
 	order.hide();
 	product.show();
 })
+//选择支付方式
 $('.paymentinfo').on('click',function(){
+	kit.backindexTime();
 	var paytype = $(this).attr('data');
 	switch(paytype){
 		case 'NATIVE' : 
@@ -101,7 +121,6 @@ $('.paymentinfo').on('click',function(){
 	}
 	order.submitorder(paytype,function(flag,_param){
 		if(flag == true) {
-			
 			$('.choosepay').hide(800);
 			$('.protect').show(800);
 			$('.paystep2').css({
@@ -110,15 +129,20 @@ $('.paymentinfo').on('click',function(){
 			$('.point2').css({
 				'background-image': "url('images/point.png')"
 			})
-			$('.backproduct').hide();
+			$('.backproduct').hide(800);
 			var param = {
                 "merchant_no": _param.orderInfo.orderid
             },count = 1;
             $('.okpay').attr('flag', true);
             $('.okpay').attr('data', JSON.stringify(param));
+
+            kit.clearbackindexTime();
+            kit.payTime();
 			inquiry = setInterval(function () {
                 if (count >= 30) {
-                    clearInterval(paytime);
+                     clearInterval(inquiry);
+                     clearInterval(paytip);
+					 clearTimeout(paytime);
                     $('.okpay').attr('flag', false);
                 } else {
                     pmt.inquiry(param, function(result) {
@@ -129,6 +153,9 @@ $('.paymentinfo').on('click',function(){
 								});
                         		count=30;
                                 clearInterval(inquiry);
+                                clearInterval(paytip);
+					 			clearTimeout(paytime);
+                                kit.clearpayTime();
                                 sql.updateOrderInfo_paystatus(result,function(flag) {
                                 	if(flag ==true){
                                 		console.log("success: update patstatus is ok");
@@ -143,6 +170,7 @@ $('.paymentinfo').on('click',function(){
                                 oc.payAndUpdateOrder(orderparam,function(_result) {
                                 	if(_result.hasOwnProperty("code")){
                                 		if(_result.code == 0){
+                                			kit.afterpayTime();
                                 			$('.protect').hide(800);
 											$('.payresult').show(800);
 											$('.payresultcontent').html('取餐号:&nbsp;'+result.merchant_no.substring(result.merchant_no.length - 4, result.merchant_no.length));
@@ -164,12 +192,17 @@ $('.paymentinfo').on('click',function(){
 });
 //取消支付
 $('.cancelpay').on('click',function(){
+	kit.clearpayTime();
+	kit.backindexTime();
 	$('.protect').hide(800);
 	$('.choosepay').show(800);
 	$('.paystep2').css({
 		'background-image': "url('images/saoma-disabled.png')"
 	})
-	$('.backproduct').show();
+	$('.point2').css({
+		'background-image': "url('images/point-disabled.png')"
+	})
+	$('.backproduct').show(800);
 });
 //我已支付
 $('.okpay').on('click',function(){
@@ -179,6 +212,9 @@ $('.okpay').on('click',function(){
 		 pmt.inquiry(JSON.parse(data), function(result) {
             if(result.hasOwnProperty("paid")){
             	if(result.paid == 1){
+            		clearInterval(inquiry);
+                    clearInterval(paytip);
+		 			clearTimeout(paytime);
             		$('.paystep3').css({
 						'background-image': "url('images/success.png')"
 					});
@@ -198,6 +234,7 @@ $('.okpay').on('click',function(){
                     oc.payAndUpdateOrder(orderparam,function(_result) {
                     	if(_result.hasOwnProperty("code")){
                     		if(_result.code == 0){
+                    			kit.afterpayTime();
                     			$('.protect').hide(800);
 								$('.payresult').show(800);
 								$('.payresultcontent').html('取餐号:&nbsp;'+result.merchant_no.substring(result.merchant_no.length - 4, result.merchant_no.length));
@@ -215,6 +252,7 @@ $('.okpay').on('click',function(){
 });
 //返回首页
 $('.backindex').on('click',function(){
+	kit.clearafterpayTime();
 	order.hide();
 	slideshow.show();
 })

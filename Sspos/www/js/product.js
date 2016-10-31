@@ -55,10 +55,10 @@ product = (function () {
 		        			ctitle = "ctitle2";
 		        		}
 		        		if(first==1){
-                        	var myhtml = '<div id="frist" class="col-md-12 '+ctitle+'" data="'+ctg.nid+'"><img src="'+ctg.image+'" class="col-md-3 im"><span class="col-md-9">'+ctg.title+'</span></div>';
+                        	var myhtml = '<div id="frist" class="col-md-12 '+ctitle+'" data="'+ctg.nid+'"><img src="'+ctg.image+'" class="col-md-3 im"><span class="col-md-9">'+ctg.title+'</span><div class="ripple"></div></div>';
 
 	                    }else{
-	                        var myhtml = '<div class="col-md-12 '+ctitle+'" data="'+ctg.nid+'"><img src="'+ctg.image+'" class="col-md-3 im"><span class="col-md-9">'+ctg.title+'</span></div>';
+	                        var myhtml = '<div class="col-md-12 '+ctitle+'" data="'+ctg.nid+'"><img src="'+ctg.image+'" class="col-md-3 im"><span class="col-md-9">'+ctg.title+'</span><div class="ripple"></div></div>';
 	                    }
 	                    html+=myhtml;
 	                    first++;
@@ -171,7 +171,13 @@ product = (function () {
 	}
 	//绑定分类点击事件
 	function bindCategoryClick(){
-		$('.ctitle,.ctitle2').bind('click',function(){
+		$('.ctitle,.ctitle2').bind('click',function(e){
+			//关闭模态框
+			if(!$('.reproducts').is(":hidden")) {
+				$('.reproducts').hide();
+				$('.products').height('850px');
+			}
+			kit.backindexTime();
 			$('#category').find('.ctitle').css({
 				'height': '80px',
 				'padding-left': '10px !important',
@@ -198,14 +204,15 @@ product = (function () {
 			var src = $(this).find('img')[0].src;
 			var productList = playlist[id];
 			ret.loadProductHtml(productList);
-			$('.product').css({
-				'background-image':'url('+src+')'
-			})
+			// $('.product').css({
+			// 	'background-image':'url('+src+')'
+			// })
 		})
 	}
 	//绑定更换产品点击事件
 	function bindProductClick(){
-		$('.proreplace2').bind('click',function(event){
+		$('.proname,.proimage').bind('click',function(event){
+			kit.backindexTime();
 			var height = $('.products').height();
 			if(height!="350px"){
 				$('.products').css({
@@ -221,7 +228,13 @@ product = (function () {
 	}
 	//绑定产品点击事件
 	function addProductsEvent() {
-		$('.proname,.proimage').on('click',function () {
+		$('.proreplace2').on('click',function () {
+			//关闭模态框
+			if(!$('.reproducts').is(":hidden")) {
+				$('.reproducts').hide();
+				$('.products').height('850px');
+			}
+			kit.backindexTime();
 			var parent = this;
 			$(this).parent().addClass("headerActive");
         	var pdtInfo = $(this).parent().data("productInfo");
@@ -328,6 +341,12 @@ product = (function () {
 	//减少产品
 	function addCartMinusEvent(p) {
 	    $(p).delegate(".red","click", function () {
+	    	//关闭模态框
+			if(!$('.reproducts').is(":hidden")) {
+				$('.reproducts').hide();
+				$('.products').height('850px');
+			}
+	    	kit.backindexTime();
 	        var pdtInfo = $(this).parents('.cartpro').data("cartPdtInfo");
 	        cart.minusProductNumOne(pdtInfo.sku, _UIHandle());
 	    });
@@ -335,6 +354,12 @@ product = (function () {
 	//增加产品
 	function addCartAddEvent(p) {
 		$(p).delegate(".add","click", function () {
+			//关闭模态框
+			if(!$('.reproducts').is(":hidden")) {
+				$('.reproducts').hide();
+				$('.products').height('850px');
+			}
+			kit.backindexTime();
 	        var pdtInfo = $(this).parents('.cartpro').data("cartPdtInfo");
 	        cart.addProductNumOne(pdtInfo.sku, _UIHandle());
 	    });
@@ -342,6 +367,12 @@ product = (function () {
 	//删除产品
 	function addCartDelEvent(p) {
 		$(p).delegate(".delpdt","click", function () {
+			//关闭模态框
+			if(!$('.reproducts').is(":hidden")) {
+				$('.reproducts').hide();
+				$('.products').height('850px');
+			}
+			kit.backindexTime();
 	        var pdtInfo = $(this).parents('.cartpro').data("cartPdtInfo");
 	        cart.deleteproduct(pdtInfo.sku, _UIHandle());
 	    });
@@ -356,16 +387,29 @@ function clearCartDom (){
 }
 //关闭换购模态框
 $('.reclose').on('click',function(){
+	kit.backindexTime();
 	$('.products').height('850px');
 	$('.reproducts').hide();
 });
 //清空购物车
 $('.clear').on('click',function(){
+	//关闭模态框
+	if(!$('.reproducts').is(":hidden")) {
+		$('.reproducts').hide();
+		$('.products').height('850px');
+	}
+	kit.backindexTime();
 	cart.clearCartList();
 	clearCartDom();
 });
 //外带 堂食切换
 $('.istakeout').on('click',function(){
+	//关闭模态框
+	if(!$('.reproducts').is(":hidden")) {
+		$('.reproducts').hide();
+		$('.products').height('850px');
+	}
+	kit.backindexTime();
 	var istakeout = localStorage.getItem('istakeout');
 	if(istakeout==0){
 		$('.istakeout').css({
@@ -398,6 +442,12 @@ $('.istakeout').on('click',function(){
 	}
 });
 $('.cartpay').on('click',function() {
+	//关闭模态框
+	if(!$('.reproducts').is(":hidden")) {
+		$('.reproducts').hide();
+		$('.products').height('850px');
+	}
+	kit.backindexTime();
 	var produclist = cart.getproductlist();
 	if(produclist == null||produclist.length <= 0){
 		console.log("购物车空");

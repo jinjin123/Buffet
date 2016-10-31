@@ -1,0 +1,20 @@
+﻿1. 安装node环境
+2. 查看各自版本：
+	命令行：node -v
+	命令行：npm -v
+3. 安装依赖:
+	npm install electron -g    //  -g 全局安装
+	npm install electron-prebuilt -g
+	npm install --save-dev electron-prebuilt
+
+	通过 npm 安装预构建好的二进制文件，
+	然后把它作为开发依赖（development dependency）
+	写入 package.json 中（安装时带上 --save-dev 参数即可自动写入依赖）。
+	
+
+4. 启动:
+	npm install && npm start
+	
+	注："npm install" 这么做能保证项目所依赖的 Node 模块都会被拉取
+
+5. pos/config.js 只做测试用

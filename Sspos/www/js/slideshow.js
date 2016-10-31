@@ -1,4 +1,3 @@
-﻿
 slideshow = (function () {
     'use strict';
     var ret = {};
@@ -25,14 +24,14 @@ slideshow = (function () {
     ret.init = function(fun){
         if(config.STOREID!=""&&config.STOREID!=null){
             var param = {
-                "sid":config.STOREID,
+                "sid":config.STOREID2,
                 "platform_type":"ss"
             }
             mkt.get_image(param,function(reslut){
                 for(var i=0;i<reslut.length;i++){
                      ret.imagesURLList.push(reslut[i].image);
                 }
-                console.log("success: mkt get_image is ok");
+                console.log("success: mkt get_image ok");
             },function(jqXHR, textStatus, errorThrown){
                 console.log(jqXHR);
                 console.log("error: mkt get_image cannot access");
@@ -83,11 +82,12 @@ slideshow = (function () {
     return ret;
 })();
 $('#container').on('click',function(){
+	kit.backindexTime();
 	slideshow.hide();
 	product.show();
     cart.clearCartList();
     clearCartDom();
     $(".cart").children().remove();
-    $(".totalamout").html('0.00');
+    $(".totalamout").html('0.00'); 
     localStorage.setItem("istakeout",1);
 })

@@ -13,7 +13,7 @@ config = (function () {
     ret.CRM_URL = "http://crm.zkungfu.com/zkf-crm/api/";
     ret.CRM_ACCESSTOKEN ="W/bkcCjGNmzjS/l6DTwxDA==";
     //pmt
-    ret.PMT_URL = "http://payment.sparkpos.cn/api/";
+    ret.PMT_URL = "http://payment.dplor.com/api/";
     ret.PMT_KEY = "naWNUNW5pzmzISiGaHPBgMgtr";
     ret.PMT_SECURITY = "5bpjjQWp26cll0ixzKKHZOLnt";
 
@@ -22,6 +22,7 @@ config = (function () {
     ret.ID = "01";
     ret.STORENAME = "";
     ret.STOREID = "HQ020001";
+    ret.STOREID2 = "CN757023";
     ret.address_detail = "";
     ret.phone = "15710652956";
 
