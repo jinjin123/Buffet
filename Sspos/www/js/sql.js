@@ -35,6 +35,7 @@ sql = (function() {
 	//插入门店信息
 	ret.insertStoreinfo = function(fun){
 		de.get_store(function(result){
+			console.log(result);
 			if(result.hasOwnProperty("state")) {
 				if(result.state != 1||result.data == ""){
 	        		console.log("error: get storeinfo is null");

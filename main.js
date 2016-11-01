@@ -12,6 +12,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1920, height: 1080})
   mainWindow.setFullScreen(true);
+  mainWindow.setMenu(null);
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/Sspos/www/index.html`)
 
@@ -24,7 +25,6 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null
-    app.quit();
   });
   
 }

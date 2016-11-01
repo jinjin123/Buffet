@@ -5,15 +5,22 @@ pmt = (function () {
 	function getSign(param) {
 		var str = "";
 		var time = Date.parse(new Date);
-        //var time = 1476939298000;
+		var array = new Array();
         param.timestamp = time;
         for (var v in param) {
-            if (param[v] == ""|| param[v] == null || JSON.stringify(param[v]).indexOf("{") > -1 || JSON.stringify(param[v]).indexOf("[") > -1) continue;
-            str = str + v + "=" + param[v] + "&";
+        	array.push(v);
+        }
+        var sortArray = array.sort(
+			    function compareFunction(param1,param2){
+			        return param1.localeCompare(param2);  
+			    }
+			);
+        for(var i = 0;i<sortArray.length;i++){
+        	if (param[sortArray[i]] == ""|| param[sortArray[i]] == null || JSON.stringify(param[sortArray[i]]).indexOf("{") > -1 || JSON.stringify(param[sortArray[i]]).indexOf("[") > -1) continue;
+            str = str + sortArray[i] + "=" + param[sortArray[i]] + "&";
         }
         str = str + "key=" + config.PMT_KEY;
         var hash = faultylabs.MD5(str + config.PMT_SECURITY + time).toUpperCase();
-        //hash = "CEF6E45F145C256E9841E3F83EF400E1";
         return "sign=" + hash + "&" + "timestamp=" + time;
 	}
 	//获取支付参数
