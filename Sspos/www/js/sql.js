@@ -24,7 +24,7 @@ sql = (function() {
 	        tx.executeSql('create table if not exists product (sku text primary key,title text,price text,sold_out text,nid text,image text,imageurl text,time_period text,weight INTEGER,isreplace text)');
 	        //创建订单表
 	        tx.executeSql('DROP TABLE IF EXISTS orderinfo');
-	        tx.executeSql('create table if not exists orderinfo (orderid text primary key,payamount text,paystatus text,paytype text,discountamount text,productlist text,addtime text)');
+	        tx.executeSql('create table if not exists orderinfo (orderid text primary key,ordertradeno text,payamount text,paystatus text,paytype text,discountamount text,productlist text,addtime text)');
 	        //支付信息表
 	        tx.executeSql('DROP TABLE IF EXISTS pmtinfo');
 	        tx.executeSql('create table if not exists pmtinfo (channel_code text,channel_name text,isflag INTEGER)');
@@ -278,10 +278,11 @@ sql = (function() {
 	        fun(true);	
 		})
 	}
+	//修改订单状态
 	ret.updateOrderInfo_paystatus = function(param,fun) {
 		db = ret.checkdb(db);
 		db.transaction(function (tx) {
-			tx.executeSql('update orderinfo set paystatus=? where orderid=?',[param.pid,param.merchant_no],function(tx,res){
+			tx.executeSql('update orderinfo set paystatus=? ,ordertradeno = ? where orderid=?',[param.pid,param.tpn_transaction_id,param.merchant_no],function(tx,res){
 				console.log("success: update updateOrderInfo_paystatus success");
 	        	fun(true);
 			},function(e){
@@ -318,7 +319,6 @@ sql = (function() {
 			})
 		})
 	}
-	
 	//检查数据库是否打开
 	ret.checkdb = function(db){
 		if (db == undefined || db == null) {

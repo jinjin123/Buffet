@@ -1,0 +1,77 @@
+.main{
+	padding: 20px!important;
+	background-color: #333;
+	width: 100%;
+	height: 100%;
+}
+#myTabContent{
+	background-color: #fff!important;
+	height: 980px;
+	margin-top: 10px;
+	width: 100%;
+	border-radius: 5px;
+	padding:20px;
+}
+#myTab{
+	background-color: #07111d!important;
+	height: 50px!important;
+	font-size: 20px!important;
+	border: none!important;
+	border-radius: 5px!important;
+}
+#all>div{
+	padding: 0!important;
+	font-size: 20px;
+}
+.title,.check{
+	height: 80px;
+	line-height: 80px;
+	border-bottom: solid 1px #e5e5e5;
+}
+.check>select{
+	width: 200px;
+	background-color: #e5e5e5;
+}
+.boottime,.orderid,.ordertradeno{
+	height: 30px;
+}
+#starttime{
+	margin-left: 30px;
+}
+.icon{
+	display: inline-block;
+	height: 30px;
+	width: 20px;
+	text-align: center;
+}
+.qbtn{
+	height: 80px;
+	border-bottom: solid 1px #e5e5e5;
+}
+.qbtn>div{
+	float: left;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-left: 20px!important;
+	padding-right: 20px!important;
+	height: 50px;
+	line-height: 50px;
+	width: auto;
+	background-color: #ffb600;
+	border-radius: 5px;
+	text-align: center;
+	margin-top: 15px;
+}
+.qbtn>div:active{opacity:0.3;}
+.content{
+	height: 588px;
+	overflow:auto;
+}
+.content>table>tbody>tr>th{
+	font-weight: normal;
+	font-size: 17px;
+}
+.expand>img{
+	height: 20px;
+	width: 20px;
+}

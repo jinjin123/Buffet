@@ -97,8 +97,8 @@ product = (function () {
 		var parent = $(".products");
 	    $(parent).undelegate();
 	    $(parent).children().remove();
-		var istime =true;
 		for(var pro in productList) {
+			var istime =true;
 			var itm = productList[pro];
         	var proreplace = '<div class="col-md-4 proreplace2"></div>';
     		if(itm.isreplace == "true" || itm.isreplace == true) {

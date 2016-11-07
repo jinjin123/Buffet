@@ -22,6 +22,8 @@ html body {
     background-color:#fff;
     font-family:"Microsoft Yahei", serif;
     letter-spacing: 1px;
+    height: 1080px;
+    width: 1920px;
 }
 .backtip{
     height: 100px;

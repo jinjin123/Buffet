@@ -43,7 +43,7 @@ pmt = (function () {
                          mq:"",
                          request_source: "zz",
                          sid: _param.orderInfo.storeid,
-                         subject: "自助点餐",
+                         subject: "自助点餐订单号 " + _param.orderInfo.orderid,
                          timestamp:"",
                          type: "dingdan"
                      };
@@ -62,7 +62,7 @@ pmt = (function () {
                          mq:"",
                          request_source: "zz",
                          sid: _param.orderInfo.storeid,
-                         subject: "自助点餐",
+                         subject: "自助点餐订单号 " + _param.orderInfo.orderid,
                          timestamp: "",
                          type: "dingdan"
                      };
