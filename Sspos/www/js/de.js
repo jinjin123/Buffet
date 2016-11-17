@@ -13,7 +13,6 @@ de = (function (){
 		var _param = {
 			url : config.DE_URL + "get_product_category_kd" + config.DE_CODE + "&sid=" + config.STOREID2 + "&posid=7570"
 		}
-		console.log(_param);
 		_ajax.get(_param,_success,_error);
 	}
 	//获取产品信息

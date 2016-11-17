@@ -91,3 +91,13 @@ $('#container').on('click',function(){
     $(".totalamout").html('0.00'); 
     localStorage.setItem("istakeout",1);
 })
+$('.circle2').on('click',function(){
+    kit.backindexTime();
+    slideshow.hide();
+    product.show();
+    cart.clearCartList();
+    clearCartDom();
+    $(".cart").children().remove();
+    $(".totalamout").html('0.00'); 
+    localStorage.setItem("istakeout",1);
+})

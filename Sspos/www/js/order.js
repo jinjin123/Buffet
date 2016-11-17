@@ -33,6 +33,7 @@ order = (function() {
 	//提交订单
 	ret.submitorder = function (paytype,fun) {
 		var param = oc.getParam(paytype);
+		console.log(param);
 		sql.insertOrderInfo(param,function(flag) {
 			if(flag){
 				oc.submitOrder(param,function(result){
@@ -156,7 +157,7 @@ $('.paymentinfo').on('click',function(){
                                 clearInterval(paytip);
 					 			clearTimeout(paytime);
                                 kit.clearpayTime();
-                                sql.updateOrderInfo_paystatus(result,function(flag) {
+                                sql.updateOrderInfo_payStatus(result,function(flag) {
                                 	if(flag ==true){
                                 		console.log("success: update patstatus is ok");
                                 	}

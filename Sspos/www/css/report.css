@@ -75,3 +75,22 @@
 	height: 20px;
 	width: 20px;
 }
+.detail{
+	height: 170px;
+	display: none;
+}
+.detailContent{
+	height: 170px;
+	width: 100%;
+	padding: 10px;
+}
+.detailContent>.span1{
+	display: inline-block;
+	height: 50px;
+	width: 7%;
+}
+.detailContent>.span2{
+	display: inline-block;
+	height: 50px;
+	width: 93%;
+}

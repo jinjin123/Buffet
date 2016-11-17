@@ -1,9 +1,9 @@
 $(document).ready(function () {
     sql.opendb();
-    //sql.createTable(); //第一次打开程序时执行此方法一次
-    //sql.ipc();
-    //sql.isi();
-    //sql.ipt();
+    //sql.deletedb();
+    // sql.isi();
+    // sql.ipc();
+    // sql.ipt();
     $('#body').css('height', window.innerHeight);
     $('#body').css('width', window.innerWidth);
     setInterval(function () {
@@ -16,15 +16,13 @@ $(document).ready(function () {
         }
     },3*1000);
     product.init();
-    document.onmousedown = function(event){
 
-    }
     //获取轮播图
     slideshow.init(function(flag){
        slideshow.show(); 
     });
     //轮播图 轮播
-    kit.setTimerout("slideshow",5*1000,function(){
+    kit.setTimerout("slideshow",800,function(){
         const TWO_PI = Math.PI * 2;
 
         var images = [], 
@@ -42,12 +40,13 @@ $(document).ready(function () {
         var margin = 50;
 
         var container = document.getElementById('container');
-        var imagesURLList = slideshow.imagesURLList;
-        /*var imagesURLList = [
+        //var imagesURLList = slideshow.imagesURLList;
+        var imagesURLList = [
+            'images/01.jpg',
             'images/02.jpg',
+            'images/03.jpg',
             'images/04.jpg',
-            'images/05.jpg'
-        ]*/
+        ]
         var clickPosition = [imageWidth * 0.5, imageHeight * 0.5];
             TweenMax.set(container, {perspective:500});
 
@@ -275,4 +274,5 @@ $(document).ready(function () {
             }
         };
     }) 
+
 } );

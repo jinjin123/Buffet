@@ -1,6 +1,38 @@
 config = (function () {
     'use strict';
+
     var ret = {};
+
+    ret.storeInfo = {
+      options : 'adapter',
+      dbname : 'storeInfo',
+      adapter : 'websql'
+    };
+    ret.productCategory = {
+      options : 'adapter',
+      dbname : 'productCategory',
+      adapter : 'websql'
+    }
+    ret.product = {
+      options : 'adapter',
+      dbname : 'product',
+      adapter : 'websql'
+    }
+    ret.orderInfo = {
+      options : 'adapter',
+      dbname : 'orderInfo',
+      adapter : 'websql'
+    }
+    ret.pmtInfo = {
+      options : 'adapter',
+      dbname : 'pmtInfo',
+      adapter : 'websql'
+    }
+
+
+
+
+
     //de
     ret.DE_URL = "http://de.zkungfu.com/api/";
     ret.DE_CODE = "?token=ef5940407a519f7e0f566bbfb2230a0331840275&security_code=testapi";

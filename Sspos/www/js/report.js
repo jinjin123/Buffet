@@ -1,9 +1,4 @@
-de = (function (){
-	'use strict';
-	var ret = {};
-	//获取支付方式
-	ret.getPmtInfo = function() {
-		
-	}
-	return ret;
-})();
+$(document).ready(function () {
+	_orderReport.init();
+	_orderReport.getAllOrder();
+});

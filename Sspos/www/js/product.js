@@ -38,7 +38,7 @@ product = (function () {
 			if(flag == true) {
 				var html ="";
 				for(var i=0; i<result.length; i++){
-					var ctg = result.item(i);
+					var ctg = result[i].doc;
 					categoryList.push(ctg);
 					if(playlist[ctg.nid] == null) {
 						playlist[ctg.nid] = {};
@@ -76,7 +76,7 @@ product = (function () {
 		sql.queryProduct(function(flag,result) {
 			if(flag == true) {
 				for(var i=0; i<result.length; i++){
-					var prd = result.item(i);
+					var prd = result[i].doc;
 					var nidList = (prd.nid).split(",");
 					nidList.forEach(function (nid, idx) {
                         if(playlist[nid]!=undefined){
