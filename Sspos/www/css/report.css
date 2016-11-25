@@ -23,6 +23,18 @@
 	padding: 0!important;
 	font-size: 20px;
 }
+#ok>div{
+	padding: 0!important;
+	font-size: 20px;
+}
+#refund>div{
+	padding: 0!important;
+	font-size: 20px;
+}
+#no-payment>div{
+	padding: 0!important;
+	font-size: 20px;
+}
 .title,.check{
 	height: 80px;
 	line-height: 80px;
@@ -64,7 +76,7 @@
 }
 .qbtn>div:active{opacity:0.3;}
 .content{
-	height: 588px;
+	height: 678px;
 	overflow:auto;
 }
 .content>table>tbody>tr>th{
@@ -82,7 +94,6 @@
 .detailContent{
 	height: 170px;
 	width: 100%;
-	padding: 10px;
 }
 .detailContent>.span1{
 	display: inline-block;
@@ -93,4 +104,59 @@
 	display: inline-block;
 	height: 50px;
 	width: 93%;
+}
+
+.bottom{
+	height: 122px;
+	position: relative;
+}
+.pages{
+	position: absolute!important;
+	right: 40px!important;
+	bottom: 20px!important;
+}
+.pages>label{
+	background-color: #fff;
+	border-color: #000;
+	color: #2e6da4;
+}
+.pagenum{
+	width: 60px;
+}
+.pageicon{
+	width: 60px;
+	display: none !important;
+}
+.motal{
+	display: none;
+	height: 122px;
+	width: 300px;
+	bottom: 20px;
+	left: 80px;
+	position: absolute;
+	line-height: 122px;
+}
+.motal>.inpag{
+	height: 50px;
+	text-align: center;
+	border-color: #2e6da4;
+	font-size: 20px;
+	width: 180px;
+	position: absolute;
+	left: 20px;
+	bottom: 30px;
+}
+.motal>.inbtn{
+	height: 50px;
+	text-align: center;
+	border:none;
+	width: 80px;
+	position: absolute;
+	left: 200px;
+	bottom: 30px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 20px;
+	background-color: #2e6da4;
+	color: #fff;
 }

@@ -1,9 +1,10 @@
 $(document).ready(function () {
     sql.opendb();
-    //sql.deletedb();
+    // sql.deletedb();
     // sql.isi();
     // sql.ipc();
     // sql.ipt();
+    // sql.ipmt();
     $('#body').css('height', window.innerHeight);
     $('#body').css('width', window.innerWidth);
     setInterval(function () {

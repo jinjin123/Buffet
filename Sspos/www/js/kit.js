@@ -171,6 +171,22 @@ kit = (function () {
             return String(num3);
         }
     }
+    //监听文本框内容改变
+    ret.ListenerText = function (input,fun) {
+        if(window.addEventListener) { //先执行W3C
+          input.addEventListener("input", fun, false);
+        } else {
+          input.attachEvent("onpropertychange", fun);
+          
+        }
+        if(window.VBArray && window.addEventListener) { //IE9
+          input.attachEvent("onkeydown", function() {
+            var key = window.event.keyCode;
+            (key == 8 || key == 46) && fun();//处理回退与删除
+          });
+          input.attachEvent("oncut", fun);//处理粘贴
+        }
+    }
     return ret;
 })();
 

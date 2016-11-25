@@ -157,6 +157,7 @@ $('.paymentinfo').on('click',function(){
                                 clearInterval(paytip);
 					 			clearTimeout(paytime);
                                 kit.clearpayTime();
+                                console.log(result);
                                 sql.updateOrderInfo_payStatus(result,function(flag) {
                                 	if(flag ==true){
                                 		console.log("success: update patstatus is ok");

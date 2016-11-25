@@ -27,10 +27,10 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-						<li><a href="#all" tabindex="-1" data-toggle="tab">全部</a></li>
-						<li><a href="#ok" tabindex="-1" data-toggle="tab">完成单</a></li>
-						<li><a href="#refund" tabindex="-1" data-toggle="tab">退款单</a></li>
-						<li><a href="#non-payment" tabindex="-1" data-toggle="tab">未付款单</a></li>
+						<li><a href="#all" tabindex="-1" data-toggle="tab" class ="type" data ="all">全部</a></li>
+						<li><a href="#ok" tabindex="-1" data-toggle="tab" class ="type" data ="ok">完成单</a></li>
+						<li><a href="#refund" tabindex="-1" data-toggle="tab" class ="type" data ="refund">退款单</a></li>
+						<li><a href="#no-payment" tabindex="-1" data-toggle="tab" class ="type" data ="no-payment">未付款单</a></li>
 					</ul>
 				</li> 
 			</ul>
@@ -44,6 +44,59 @@
 				<div class="tab-pane fade" id="all">
 					<div class="col-md-1 title">
 						全部订单
+					</div>
+					<div class="col-md-11 check">
+						<select class="spaystatus">
+						  <option value="" selected="selected">--请选择付款状态--</option>
+						  <option value="1">已付款</option>
+						  <option value="0">未付款</option>
+						</select>
+						<select class="paytype">
+						  <option value="" selected="selected">--请选择支付方式--</option>
+						</select>
+						<select class="istakeout">
+						  <option value="" selected="selected">--请选择就餐方式--</option>
+						  <option value="1">外带</option>
+						  <option value="0">堂食</option>
+						</select>
+						<input class="boottime" type="text" value="" id="starttime">
+						<div class="icon">至</div>
+						<input class="boottime" type="text" value="" id="endtime">
+						<input class="orderid" type="text" value="" id="orderid" placeholder="请输入订单号">
+						<input class="ordertradeno" type="text" value="" id="ordertradeno" placeholder="请输入交易流水号">
+					</div>
+					<div class="qbtn col-md-12">
+						<div class="query">查&nbsp;询</div>
+						<div class="sys">同步服务器订单状态</div>
+					</div>
+					<div class="col-md-12 content">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+									<th>订单号</th>
+									<th>交易流水号</th>
+									<th>总金额</th>
+									<th>支付状态</th>
+									<th>支付方式</th>
+									<th>下单时间</th>
+								</tr>
+							</thead>
+							<tbody class="orderlist">
+
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-12 bottom">
+						<div class="btn-group pages" data-toggle="buttons">
+
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="ok">
+					<div class="col-md-1 title">
+						完成单
 					</div>
 					<div class="col-md-11 check">
 						<select>
@@ -83,20 +136,139 @@
 									<th>下单时间</th>
 								</tr>
 							</thead>
-							<tbody id="orderlist">
+							<tbody class="orderlist">
 
 							</tbody>
 						</table>
 					</div>
-				</div>
-				<div class="tab-pane fade" id="ok">
-					4
+					<div class="col-md-12 bottom">
+						<div class="btn-group pages" data-toggle="buttons">
+							
+						</div>
+					</div>
 				</div>
 				<div class="tab-pane fade" id="refund">
-					5
+					<div class="col-md-1 title">
+						退款单
+					</div>
+					<div class="col-md-11 check">
+						<select>
+						  <option value="" selected="selected">--请选择付款状态--</option>
+						  <option value="1">已付款</option>
+						  <option value="0">未付款</option>
+						</select>
+						<select class="paytype">
+						  <option value="" selected="selected">--请选择支付方式--</option>
+						</select>
+						<select>
+						  <option value="" selected="selected">--请选择就餐方式--</option>
+						  <option value="1">外带</option>
+						  <option value="0">堂食</option>
+						</select>
+						<input class="boottime" type="text" value="" id="starttime">
+						<div class="icon">至</div>
+						<input class="boottime" type="text" value="" id="endtime">
+						<input class="orderid" type="text" value="" id="orderid" placeholder="请输入订单号">
+						<input class="ordertradeno" type="text" value="" id="ordertradeno" placeholder="请输入交易流水号">
+					</div>
+					<div class="qbtn col-md-12">
+						<div class="query">查&nbsp;询</div>
+						<div class="sys">同步服务器订单状态</div>
+					</div>
+					<div class="col-md-12 content">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+									<th>订单号</th>
+									<th>交易流水号</th>
+									<th>总金额</th>
+									<th>支付状态</th>
+									<th>支付方式</th>
+									<th>下单时间</th>
+								</tr>
+							</thead>
+							<tbody class="orderlist">
+
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-12 bottom">
+						<div class="btn-group pages" data-toggle="buttons">
+							<label class="btn btn-primary pageicon start">
+								<input type="radio" name="options" id="optionstart"><
+							</label>
+							
+
+							<label class="btn btn-primary pageicon">
+								<input type="radio" name="options" id="optionend">>
+							</label>
+						</div>
+					</div>
 				</div>
-				<div class="tab-pane fade" id="non-payment">
-					6
+				<div class="tab-pane fade" id="no-payment">
+					<div class="col-md-1 title">
+						未付款单
+					</div>
+					<div class="col-md-11 check">
+						<select>
+						  <option value="" selected="selected">--请选择付款状态--</option>
+						  <option value="1">已付款</option>
+						  <option value="0">未付款</option>
+						</select>
+						<select class="paytype">
+						  <option value="" selected="selected">--请选择支付方式--</option>
+						</select>
+						<select>
+						  <option value="" selected="selected">--请选择就餐方式--</option>
+						  <option value="1">外带</option>
+						  <option value="0">堂食</option>
+						</select>
+						<input class="boottime" type="text" value="" id="starttime">
+						<div class="icon">至</div>
+						<input class="boottime" type="text" value="" id="endtime">
+						<input class="orderid" type="text" value="" id="orderid" placeholder="请输入订单号">
+						<input class="ordertradeno" type="text" value="" id="ordertradeno" placeholder="请输入交易流水号">
+					</div>
+					<div class="qbtn col-md-12">
+						<div class="query">查&nbsp;询</div>
+						<div class="sys">同步服务器订单状态</div>
+					</div>
+					<div class="col-md-12 content">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>&nbsp;</th>
+									<th>&nbsp;</th>
+									<th>订单号</th>
+									<th>交易流水号</th>
+									<th>总金额</th>
+									<th>支付状态</th>
+									<th>支付方式</th>
+									<th>下单时间</th>
+								</tr>
+							</thead>
+							<tbody class="orderlist">
+
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-12 bottom">
+						<div class="btn-group pages" data-toggle="buttons">
+							<label class="btn btn-primary pageicon start">
+								<input type="radio" name="options" id="optionstart"><
+							</label>
+							
+
+							<label class="btn btn-primary pageicon">
+								<input type="radio" name="options" id="optionend">>
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="motal">
+					<input id="inpag" type="text" placeholder="输入页码" class="inpag"><input class="inbtn" type="button" name="" value="确定">
 				</div>
 			</div>
 		</div>

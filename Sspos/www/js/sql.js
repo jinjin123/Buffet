@@ -209,7 +209,9 @@ sql = (function() {
 				ordertradeno : '',
 				payamount : JSON.stringify(param.orderInfo.payamount),
 				paystatus : JSON.stringify(param.orderInfo.paystatus),
-				paytype : JSON.stringify(param.orderInfo.paytype),
+				orderstatus : 1,
+				paytype : JSON.stringify(param.orderInfo.paytype).replace(/"/g, ""),
+				istakeout : localStorage.getItem("istakeout"),
 				dicountamount : JSON.stringify(param.orderInfo.dicountamount),
 				productList : JSON.stringify(param.productList),
 				dicountlist : JSON.stringify(param.discountList),
@@ -321,7 +323,7 @@ sql = (function() {
 			doc : {
 				_id : param.merchant_no,
 				_rev : '',
-				paystatus : param.pid,
+				paystatus : param.paid,
 				ordertradeno : param.tpn_transaction_id
 			}
 		}
@@ -329,6 +331,7 @@ sql = (function() {
 			try {
 				if(result.hasOwnProperty("ok")){
 					if(result.ok == true) {
+						console.log(result);
 						fun(true);
 					}
 				}
@@ -374,11 +377,9 @@ sql = (function() {
 			}
 		}
 		_pouchdb.allDocs(_param, function(result) {
-			console.log(result);
 			try {
 				if (result.hasOwnProperty("rows")) {
 					if(result.rows.length > 0) {
-						console.log(1);
 						fun(true,result.rows);
 					} else {
 						console.log(2);
@@ -435,6 +436,7 @@ sql = (function() {
 					}
 				}
 			} catch(err) {
+				console.log(err);
 				fun(false);
 			}
 		})
@@ -442,10 +444,27 @@ sql = (function() {
 	//查询订单信息
 	ret.queryOrder = function(param, fun) {
 		ret.checkdb(orderInfo);
-		var _param = {
-			db : orderInfo,
-			doc : param.doc
+		var _param = {};
+		if (param.hasOwnProperty("limit")) {
+			_param = {
+				db : orderInfo,
+				doc : {
+					include_docs : true,
+					attachments : false,
+					limit : param.limit,
+					skip : param.skip
+				}
+			}	
+		} else {
+			_param = {
+				db : orderInfo,
+				doc : {
+					include_docs : true,
+					attachments : false,
+				}
+			}
 		}
+		
 		_pouchdb.allDocs(_param, function(result) {
 			try {
 				if (result.hasOwnProperty("rows")) {
@@ -456,6 +475,7 @@ sql = (function() {
 					}
 				}
 			} catch(err) {
+				console.log(err);
 				fun(false);
 			}
 		})
