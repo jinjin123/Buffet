@@ -120,8 +120,8 @@ product = (function () {
 				}
 	        	if(istime) {
 	        		var myhtml = '<div class="product">'+
-				    				'<div class="col-md-5 proname">'+itm.title+'</div>'+
-				    				'<div class="col-md-7 proimage">'+
+				    				'<div class="col-md-5 proname" data="'+itm.isreplace+'">'+itm.title+'</div>'+
+				    				'<div class="col-md-7 proimage" data="'+itm.isreplace+'">'+
 				    					'<img src="'+itm.imageurl+'">'+
 				    				'</div>'+
 				    				'<div class="col-md-8 proprice">'+
@@ -136,8 +136,8 @@ product = (function () {
 	        			proreplace = '<div class="col-md-4 proreplace2"></div>'
 	        		}
 	        		var myhtml = '<div class="product">'+
-				    				'<div class="col-md-5 proname">'+itm.title+'</div>'+
-				    				'<div class="col-md-7 proimage">'+
+				    				'<div class="col-md-5 proname" data="'+itm.isreplace+'">'+itm.title+'</div>'+
+				    				'<div class="col-md-7 proimage" data="'+itm.isreplace+'">'+
 				    					'<img src="'+itm.imageurl+'">'+
 				    				'</div>'+
 				    				'<div class="col-md-8 proprice">'+
@@ -150,8 +150,8 @@ product = (function () {
 				}
 			} else {
         		var myhtml = '<div class="product">'+
-			    				'<div class="col-md-5 proname">'+itm.title+'</div>'+
-			    				'<div class="col-md-7 proimage">'+
+			    				'<div class="col-md-5 proname" data="'+itm.isreplace+'">'+itm.title+'</div>'+
+			    				'<div class="col-md-7 proimage" data="'+itm.isreplace+'">'+
 			    					'<img src="'+itm.imageurl+'">'+
 			    				'</div>'+
 			    				'<div class="col-md-8 proprice">'+
@@ -212,18 +212,21 @@ product = (function () {
 	//绑定更换产品点击事件
 	function bindProductClick(){
 		$('.proname,.proimage').bind('click',function(event){
+			var flag = $(this).attr("data");
 			kit.backindexTime();
-			var height = $('.products').height();
-			if(height!="350px"){
-				$('.products').css({
-					'height':'350px',
-					'margin-bottom' : '40px;'
-				})
-				var top = $(this).parent('.product').position().top;
-				$('.products').scrollTop(top);
+			if(flag=="true" || flag == true){
+				var height = $('.products').height();
+				if(height!="350px"){
+					$('.products').css({
+						'height':'350px',
+						'margin-bottom' : '40px;'
+					})
+					var top = $(this).parent('.product').position().top;
+					$('.products').scrollTop(top);
+				}
+				$('.reproducts').show();
+				event.stopPropagation();
 			}
-			$('.reproducts').show();
-			event.stopPropagation();
 		})
 	}
 	//绑定产品点击事件

@@ -172,7 +172,7 @@ sql = (function() {
 								imageurl : my_image,
 								time_period : JSON.stringify(myproduct.time_period),
 								weight : myproduct.weight,
-								isreplace : "true"
+								isreplace : "false"
 							}
 						}
 						_pouchdb.put(_param, function(result) {

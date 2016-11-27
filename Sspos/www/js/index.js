@@ -1,6 +1,6 @@
 $(document).ready(function () {
     sql.opendb();
-    // sql.deletedb();
+    sql.deletedb();
     // sql.isi();
     // sql.ipc();
     // sql.ipt();
