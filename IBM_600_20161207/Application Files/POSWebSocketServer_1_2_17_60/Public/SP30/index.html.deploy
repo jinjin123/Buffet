@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>功夫送 3.0</title>
+  <script type="text/javascript" src="SP30Services.js"></script>
+  <script>
+  	/*
+  	mCommonService.init("ws://localhost:4649/Common", null, null, function(){
+  		console.log("++++++++++++++++++++++++++++++=!");
+  		mCommonService.ldp_displayText("Hello!");
+  		setTimeout(function(){
+  			mCommonService.ldp_displayText("New World!!!");
+  		}, 5000);
+    });
+    function OpenDrawer()
+	{
+		//document.getElementById("field2").value=document.getElementById("field1").value;
+		mCommonService.OpenDrawer();
+	}
+	function customer(){
+		var aa = document.getElementById("customerStr").value;
+		mCommonService.ldp_displayText(aa);
+	}
+	*/
+    //mCommonService.
+    
+    function init(){
+    	//testSP30();
+        //SP30Services.setPort(0);
+    	//SP30Services.init("ws://localhost:4649/SP30");
+        var port = document.getElementById("ConfigComStr").value;
+        sp30_init("ws://localhost:4649/SP30", port);
+    }
+    function ConfigCom(){
+    	var port = document.getElementById("ConfigComStr").value;
+    	SP30Services.ConfigCom(port, function(d){
+    		console.log(d)
+    		console.log("ConfigCom:" + d);
+    	});
+    }
+    function rf_init_com() {
+    	SP30Services.rf_init_com(0, function(d){
+    		console.log(d)
+    		console.log("rf_init_com:" + d);
+    	});
+    }
+    function Signin(){
+    	SP30Services.Signin(function(d){
+    		console.log(d)
+    		console.log("Signin:" + d);
+    	});
+    }
+    function Signoff(){
+    	SP30Services.Signoff(function(d){
+    		console.log(d)
+    		console.log("Signoff:" + d);
+    	});
+    }
+    function SetOperatorID(){
+    	SP30Services.SetOperatorID("000099",function(d){
+    		console.log(d)
+    		console.log("SetOperatorID:" + d);
+    	});
+    }
+    function Payment(){
+    	SP30Services.Payment(1,function(d){
+    		console.log(d)
+    		console.log("Payment:" + d);
+    	});
+    }
+    function ReadCard(){
+    	SP30Services.ReadCard(function(d){
+    		console.log(d)
+    		console.log("ReadCard:" + d);
+    	});
+    }
+    function WriteCard(){
+    	var card = document.getElementById("WriteCardStr").value; //"9876543210|03|01|100.50|1010|1A8E5D12";
+    	SP30Services.WriteCard(card, function(s){
+    		console.log("WriteCard state:" + s);
+    	});
+    }
+    function goodbye(){
+        console.log("goodBye");
+    }
+  </script>
+  </head>
+  <body onunload="goodbye()">
+   <div style="border:1px solid red;">
+	   输入端口号：<input type="text" name="fname" id="ConfigComStr" value="3" />
+       <button id="testSp30" onclick="init()">Init</button> <br />
+	   <button id="Signin" onclick="Signin()">Signin</button> <br />
+	   <button id="Signoff" onclick="Signoff()">Signoff</button> <br />
+	   <button id="SetOperatorID" onclick="SetOperatorID()">SetOperatorID</button> <br />
+	   <button id="Payment" onclick="Payment()">Payment</button> <br />
+	   <button id="ReadCard" onclick="ReadCard()">ReadCard</button> <br />
+	   输入卡号信息：<input type="text" name="fname" id="WriteCardStr" value="9876543210|03|01|100.50|1010|1A8E5D12" /><button id="WriteCard" onclick="WriteCard()">WriteCard</button> <br />
+	</div>
+  </body>
+</html>

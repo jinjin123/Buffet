@@ -1,0 +1,9 @@
+server_port = 6665
+server_ip = 172.16.99.31
+
+server_port_bak = 6665
+server_ip_bak = 172.16.99.31
+
+max_batch_num = 25
+operator_id = 01
+load_ip_from_pos = 0

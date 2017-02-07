@@ -1,0 +1,192 @@
+
+var mCommonService = (function(){
+  'use strict';
+  var commonServiceType = {
+    "OpenDrawer": 0,
+    "CloseDrawer": 1,
+    "CloseApp": 2,
+    "RebootPC": 3,
+    "ShutdownPC": 4,
+    "Version": 5,
+    "jsLog": 6,
+    "ldp_displayText": 7,
+    "ldp_clearText": 8,
+    "ldp_claim": 9,
+    "ldp_close": 10
+  };
+  var ret = {},
+      url,
+      ws,
+      timesWS = 0,
+      timeoutWS = 5000,
+      heartbeatTimer,
+      storeInfo,
+      _onopen,
+      _onclose,
+      _onmessage,
+      _onerror;
+  
+  function send (message) {
+    if(ws && ws.readyState == 1){
+      ws.send(message);
+    }else{
+      console.log("sqlite service is down!");
+    }
+  }
+  function heartbeat() {
+      heartbeatTimer = setInterval(function () {
+                          send("");
+                      }, 73 * 1000);
+  }
+  ret.init = function (u, onmessage, onerror, onopen, onclose){
+    if(url && _onmessage && _onopen && _onclose){
+      if(u && typeof(u) == "string") url = u;
+      ws.close();
+      return;
+    }
+    url = u;
+    if(onerror == null){
+      _onerror = function(evt){
+      };
+    }else{
+      _onerror = onerror;
+    }
+    if(onopen == null){
+      _onopen = function(evt){
+        console.log("commonService connected!");
+        ret.getVersion();
+      };
+    }else{
+      _onopen = onopen;
+    }
+    if(onclose == null){
+      _onclose = function(evt){
+        setTimeout(function(){
+          ret.reconnect();
+        },3000);
+      };
+    }else{
+      _onclose = onclose;
+    }
+    if(onmessage == null){
+      _onmessage = function(evt){
+        try{
+          var d = JSON.parse(evt.data);
+          if(d.type == commonServiceType.Version){
+            $("#moreVersion").text("V" + d.data);
+            $("#hStoreIdTextHeader").text("V" + d.data);
+          }
+        }
+        catch(err)
+        {
+          console.log("commonService Message Exception!");
+        }
+        
+      };
+    }else{
+      _onmessage = onmessage;
+    }
+    if(ws){
+      ws.close();
+      ws = null;
+    }
+    ws = new WebSocket (url);
+    ws.onopen = _onopen;
+    ws.onclose = _onclose;
+    ws.onmessage = _onmessage;
+    ws.onerror = _onerror;
+    heartbeatTimer = clearInterval(heartbeatTimer);
+    heartbeat();
+  };
+  ret.reconnect = function(){
+    timesWS += 1;
+    timeoutWS = timesWS * 5000;
+    if (timesWS >= 100) {
+        timesWS == 0;
+    }
+    if(ws){
+       ws.close();
+      ws = null;
+    }
+    ws = new WebSocket (url);
+    ws.onopen = _onopen;
+    ws.onclose = _onclose;
+    ws.onmessage = _onmessage;
+    ws.onerror = _onerror;
+  };
+  ret.OpenDrawer = function(){
+    var cmd = {
+      "type": commonServiceType.OpenDrawer,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.CloseApp = function(){
+    var cmd = {
+      "type": commonServiceType.CloseApp,
+      "data": "chrome"
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.Shutdown = function(){
+    var cmd = {
+      "type": commonServiceType.ShutdownPC,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.RebootPC = function(){
+    var cmd = {
+      "type": commonServiceType.RebootPC,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.getVersion = function(){
+    var cmd = {
+      "type": commonServiceType.Version,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.jsLog = function(name, message){
+    var param = {
+      "name": name,
+      "message": message
+    };
+    var cmd = {
+      "type": commonServiceType.jsLog,
+      "data": JSON.stringify(param)
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_displayText = function(text){
+    var cmd = {
+      "type": commonServiceType.ldp_displayText,
+      "data": text
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_clearText = function(){
+    var cmd = {
+      "type": commonServiceType.ldp_clearText,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_claim = function(){
+    var cmd = {
+      "type": commonServiceType.ldp_claim,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_close = function(){
+    var cmd = {
+      "type": commonServiceType.ldp_close,
+      "data": ""
+    }
+    send(JSON.stringify(cmd));
+  };
+  return ret;
+})();

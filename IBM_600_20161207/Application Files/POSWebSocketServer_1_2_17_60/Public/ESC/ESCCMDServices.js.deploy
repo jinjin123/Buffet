@@ -1,0 +1,434 @@
+﻿/*
+  该代码实现JS发送ESC指令打印小票，
+*/
+var ESCCMDServices = (function () {
+    'use strict';
+  var ESCType = { 
+    "Hex": 0, // 打印机ESC 指令
+    "Img": 1, // 打印图片
+    "Text": 2, // 打印文字
+    "barCode":3, // 打印自动生成的二维码，一维码
+  };
+   
+  //scale 是图像的大小设置的参数, this depends on your printer model. for Beiyang you should use 1000
+  function getEscCMD(type, data, scale){
+   	//width, height, format, barCodeString, characterSet, disableECI){
+    var cmdObj = {};
+    switch(type){
+      case ESCType.Hex:
+        cmdObj.data = data;
+        cmdObj.type = type;
+        break;
+      case ESCType.Img:
+        var obj = {
+          "data": data,
+          "scale": scale
+        };
+        cmdObj.data = JSON.stringify(obj);
+        cmdObj.type = type;
+        break;
+      case ESCType.Text:
+        cmdObj.data = data;
+        cmdObj.type = type;
+        break;
+      case ESCType.barCode:
+         var obj = {
+         	"data": data,
+         	"scale": scale,
+         	/*
+          "width": width,
+          "height": height,
+          "format": format,
+          "barCodeString": barCodeString,
+          "characterSet": characterSet,
+          "disableECI": disableECI,
+          */
+        };
+        cmdObj.data = JSON.stringify(obj);
+        cmdObj.type = type;
+        break;
+      default:
+        break;
+    }
+    return cmdObj;
+  }
+  
+  var ret = {},
+      url,
+      _onopen,
+      _onclose,
+      _onmessage,
+      _onerror,
+      initated = false,
+      timesWS = 0,
+      timeoutWS = 5000,
+      heartbeatTimer,
+      ws;
+  var printerName,
+      ESCArr = [],
+      lineWidth = 48, // 打印一行英文字母的个数。要根据打印机情况设置。
+      rate = 2, //一个汉字对应多少个英文字母。根据打印机不同。
+      EscCMDObj = {};
+
+  function setInitated(v) {
+      initated = v;
+  }
+  function iSInitated() {
+      return initated;
+  }
+  ret.isInitated = function () {
+      return initated;
+  };
+  function generateUUID() {
+    var d = new Date().getTime();
+    if (window.performance && typeof window.performance.now === "function") {
+        d += performance.now(); //use high-precision timer if available
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+  }
+  var callbackManager = (function () {
+      var r = {},
+          id_list = [];
+      r.checkId = function (id, d) {
+          id_list.forEach(function (item, index) {
+              if (item.id == id) {
+                  if (typeof (item.fun) == "function") {
+                      item.fun(d);
+                  }
+                  item = null;
+                  id_list.splice(index, 1);
+                  return id;
+              }
+          });
+          return false;
+      };
+      r.addId = function (callback) {
+          var id = generateUUID();
+          var obj = {
+              "id": id,
+              "fun": callback
+          };
+          id_list.push(obj);
+          return id;
+      };
+      r.clearId = function () {
+          id_list.forEach(function (item, index) {
+              item = null;
+              id_list.splice(index, 1);
+          });
+      };
+      return r;
+  })();
+  function send(message) {
+      if (ws && ws.readyState == 1) {
+          ws.send(message);
+      } else {
+          try{
+              var d = JSON.parse(message);
+              //d.type = SP30Type.exception;
+              //callbackManager.checkId(d.id, JSON.stringify(d));
+          } catch (err) {
+              console.log(err);
+          }
+         
+      }
+  }
+  function heartbeat() {
+      heartbeatTimer = setInterval(function () {
+                          send("");
+                      }, 73 * 1000);
+  }
+  ret.init = function (u, onmessage, onerror, onopen, onclose) {
+      if(url && _onmessage && _onopen && _onclose){
+        if(u && typeof(u) == "string") url = u;
+        ws.close();
+        return;
+      }
+      url = u;
+      if (onerror == null) {
+          _onerror = function (evt) {
+              console.log("ESCCMDServices error!");
+          };
+      } else {
+          _onerror = onerror;
+      }
+      if (onopen == null) {
+          _onopen = function (evt) {
+              console.log("ESCCMDServices WebSocket connected!");
+              timesWS = 0;
+              timeoutWS = 5000;
+          };
+      } else {
+          _onopen = onopen;
+      }
+      if (onclose == null) {
+          _onclose = function (evt) {
+              console.log("ESCCMDServices close!");
+              console.log(evt);
+              //logFile.log("SP30Services close!");
+              console.log(evt.code);
+              //logFile.log(evt.code);
+              //logFile.log(evt.ToString());
+              setInitated(false);
+              callbackManager.clearId();
+              setTimeout(function () {
+                  ret.reconnect()
+              }, timeoutWS);
+          };
+      } else {
+          _onclose = onclose;
+      }
+      if (onmessage == null) {
+          _onmessage = function (evt) {
+              var d = JSON.parse(evt.data);
+              callbackManager.checkId(d.id, d);
+          };
+      } else {
+          _onmessage = onmessage;
+      }
+      if (ws) {
+          ws.close();
+          ws = null;
+      }
+      ws = new WebSocket(url);
+      ws.onopen = _onopen;
+      ws.onclose = _onclose;
+      ws.onmessage = _onmessage;
+      ws.onerror = _onerror;
+      heartbeatTimer = clearInterval(heartbeatTimer);
+      heartbeat();
+  };
+  ret.reconnect = function () {
+      timesWS += 1;
+      timeoutWS = timesWS * 5000;
+      if (timesWS >= 100) {
+          timesWS == 0;
+          //alert("闪付多次尝试连接失败,请检查设备~");
+          //myTip(900, "闪付多次尝试连接失败,请检查设备~", 10000 * 1000);
+          //return false;
+      }
+      if (ws) {
+          ws.close();
+          ws = null;
+      }
+      ws = new WebSocket(url);
+      ws.onopen = _onopen;
+      ws.onclose = _onclose;
+      ws.onmessage = _onmessage;
+      ws.onerror = _onerror;
+  }
+  ret.setLineWidth = function(w){
+    // 小票打印一行英文字符需要的字符个数。
+    lineWidth = w;
+  };
+  ret.getLineWidth = function(){
+    return lineWidth;
+  };
+  ret.setRate = function(r){
+    rate = r;
+  };
+  ret.getRate = function(){
+    return rate;
+  };
+  ret.setPrinter = function(p){
+    printerName = p;
+  };
+  ret.printCacheAndFeed = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "0A"));
+  };
+  ret.printCacheNoFeed = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "0D"));
+  };
+  ret.printFeedLine = function(len){
+    //len 是十六进制数的字符串，要去掉0X
+    var cmd = "1B64";
+    ESCArr.push(getEscCMD(ESCType.Hex, cmd + len));
+  };
+  ret.printFeedDot = function(len){
+    //len 是十六进制数的字符串，要去掉0X
+    var cmd = "1B4A";
+    ESCArr.push(getEscCMD(ESCType.Hex, cmd + len));
+  };
+  ret.alignLeft = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B6130"));
+  };
+  ret.alignCenter = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B6131"));
+  };
+  ret.alignRight = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B6132"));
+  };
+  ret.cutPaper = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1D5630"));
+  };
+  //中文倍高倍宽
+  ret.dobuleHWZH = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1C5703"));
+  };
+  ret.CanceldobuleHWZH = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1C5700"));
+  };
+  // 英文倍高倍宽
+  ret.dobuleHWEng = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B2130"));
+  };
+  //英文倍高
+  ret.dobuleHEng = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B2110"));
+  };
+  //英文倍宽
+  ret.dobuleWEng = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B2120"));
+  };
+  ret.CanceldobuleHWEng = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B2100"));
+  };
+  ret.openDrawer = function(){
+    ESCArr.push(getEscCMD(ESCType.Hex, "1B7000eeff"));
+  };
+  ret.customCmd = function(cmd){
+    //可以直接输入自定义的ESC指令，必须是Hex, 要去掉0x
+    ESCArr.push(getEscCMD(ESCType.Hex, cmd));
+  };
+  ret.printString = function(str){
+    ESCArr.push(getEscCMD(ESCType.Text, str));
+  };
+  //bmpBase64Str 是bmp 图片转化为base64 字符串
+  //scale 是设置打印图片大小，值得范围为0 ~ 1000, 0是最小，1000是最大，请根据实际情况设置相应的值
+  ret.printImg = function(bmpBase64Str, scale){
+    ESCArr.push(getEscCMD(ESCType.Img, bmpBase64Str, scale));
+  }
+  //ret.printBarCode = function(width, height, format, barCodeString, characterSet, disableECI, scale){
+  ret.printBarCode = function(barCodeString, format, EncodingOptions, scale){
+    //ESCArr.push(getEscCMD(ESCType.barCode, null, scale, width, height, format, barCodeString, characterSet, disableECI));
+    var obj = {
+    	"barCodeString": barCodeString,
+    	"format": format,
+    	"EncodingOptions": JSON.stringify(EncodingOptions),
+    }
+    ESCArr.push(getEscCMD(ESCType.barCode, JSON.stringify(obj), scale));
+  }
+  function getEscObj(){
+    EscCMDObj.Data = JSON.stringify(ESCArr);
+    EscCMDObj.printName = printerName;
+    var escStr = JSON.stringify(EscCMDObj);
+    ESCArr.forEach(function(d,i){ESCArr.splice(i, 1);d = null;});
+    ESCArr = [];
+    EscCMDObj = null;
+    EscCMDObj = {};
+    return escStr;
+  };
+
+  ret.print = function(p){
+    if(p) printerName = p;
+    send(getEscObj());
+  };
+  return ret;
+})();
+//
+// Summary:
+//     Enumerates barcode formats known to this package.
+var BarcodeFormat =
+{
+  //
+  // Summary:
+  //     Aztec 2D barcode format.
+  "AZTEC": 1,
+  //
+  // Summary:
+  //     CODABAR 1D format.
+  "CODABAR": 2,
+  //
+  // Summary:
+  //     Code 39 1D format.
+  "CODE_39": 4,
+  //
+  // Summary:
+  //     Code 93 1D format.
+  "CODE_93": 8,
+  //
+  // Summary:
+  //     Code 128 1D format.
+  "CODE_128": 16,
+  //
+  // Summary:
+  //     Data Matrix 2D barcode format.
+  "DATA_MATRIX": 32,
+  //
+  // Summary:
+  //     EAN-8 1D format.
+  "EAN_8": 64,
+  //
+  // Summary:
+  //     EAN-13 1D format.
+  "EAN_13": 128,
+  //
+  // Summary:
+  //     ITF (Interleaved Two of Five) 1D format.
+  "ITF": 256,
+  //
+  // Summary:
+  //     MaxiCode 2D barcode format.
+  "MAXICODE": 512,
+  //
+  // Summary:
+  //     PDF417 format.
+  "PDF_417": 1024,
+  //
+  // Summary:
+  //     QR Code 2D barcode format.
+  "QR_CODE": 2048,
+  //
+  // Summary:
+  //     RSS 14
+  "RSS_14": 4096,
+  //
+  // Summary:
+  //     RSS EXPANDED
+  "RSS_EXPANDED": 8192,
+  //
+  // Summary:
+  //     UPC-A 1D format.
+  "UPC_A": 16384,
+  //
+  // Summary:
+  //     UPC-E 1D format.
+  "UPC_E": 32768,
+  //
+  // Summary:
+  //     UPC_A | UPC_E | EAN_13 | EAN_8 | CODABAR | CODE_39 | CODE_93 | CODE_128 | ITF
+  //     | RSS_14 | RSS_EXPANDED without MSI (to many false-positives)
+  "All_1D": 61918,
+  //
+  // Summary:
+  //     UPC/EAN extension format. Not a stand-alone format.
+  "UPC_EAN_EXTENSION": 65536,
+  //
+  // Summary:
+  //     MSI
+  "MSI": 131072,
+  //
+  // Summary:
+  //     Plessey
+  "PLESSEY": 262144
+};
+
+function strlen(str){  
+  var len = 0;  
+  for (var i=0; i<str.length; i++) {   
+   var c = str.charCodeAt(i);   
+  //单字节加1   
+   if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {   
+     len++;   
+   }   
+   else {   
+    len+=2;   
+   }   
+  }   
+  return len;  
+}

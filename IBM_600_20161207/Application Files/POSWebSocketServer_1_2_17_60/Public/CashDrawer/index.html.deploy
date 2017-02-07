@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>功夫送 3.0</title>
+  <script type="text/javascript" src="CashDrawer_LDS_Type.js"></script>
+  <script>
+  	CashDrawer_LDS.init("ws://localhost:4649/CashDrawer_LDS", null, null, function(){
+  		CashDrawer_LDS.ldp_displayText("Hello!");
+  		setTimeout(function(){
+  			CashDrawer_LDS.ldp_displayText("New World!!!");
+  		}, 5000);
+    });
+    function OpenDrawer()
+  	{
+  		CashDrawer_LDS.OpenDrawer(function(d){
+        console.log(d.data);
+      });
+  	}
+    function getDrawerOpened(){
+      CashDrawer_LDS.DrawerOpened(function(d){
+        console.log(d.data);
+        document.getElementById("CashDrawerStatusStr").value = d.data;
+      });
+    }
+  	function customer(){
+  		var aa = document.getElementById("customerStr").value;
+  		CashDrawer_LDS.ldp_displayText("¥" + aa);
+  	}
+  </script>
+  </head>
+  <body>
+  <button id="OpenDrawer" onclick="OpenDrawer()">开钱箱</button><br />
+  <button id="getCashDrawerStatus" onclick="getDrawerOpened()">钱箱是否打开</button>
+  <input type="text" name="fname" id="CashDrawerStatusStr" value="" /><br />
+   First name: <input type="text" name="fname" id="customerStr" value="George" />
+   <button id="customer" onclick="customer()">客显</button><br />
+  </body>
+</html>

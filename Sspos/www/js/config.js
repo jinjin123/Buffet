@@ -30,32 +30,38 @@ config = (function () {
     }
 
 
+    ret.mq_ip = "172.28.7.1:15674";
+    ret.ssPosName = "sspos1";
+    ret.posName = "pos99";
 
+    ret.MqExchangeIP = "localhost:4649";
+    ret.MqQueueIP = "localhost:4649";
 
-
+    ret.RawPrinter_ip = "localhost:4649";
+    ret.printerName = "printer";
     //de
     ret.DE_URL = "http://de.zkungfu.com/api/";
     ret.DE_CODE = "?token=ef5940407a519f7e0f566bbfb2230a0331840275&security_code=testapi";
     //oc
-    ret.OC_URL = "http://172.16.104.97:9000/";
-    ret.ACCESS_TOKEN = "481A0y0722G721S5p21853gNNnc583N9DUZ4f90995lQbl6pGw229zA1652P2h56";
+    ret.OC_URL = "http://sparkpadg-elasticl-2t187adkjku3-926650160.cn-north-1.elb.amazonaws.com.cn:9087/newPos_oc/";
+    ret.ACCESS_TOKEN = "hty4B91i8S02je45FL07AnN29UB7Hu2mZ2t1864Hk92Oji06M1397552281Th717";
     //mkt
     ret.MKT_URL = "http://mkt.zkungfu.com/api/marketing/";
     //crm
     ret.CRM_URL = "http://crm.zkungfu.com/zkf-crm/api/";
     ret.CRM_ACCESSTOKEN ="W/bkcCjGNmzjS/l6DTwxDA==";
     //pmt
-    ret.PMT_URL = "http://payment.dplor.com/api/";
-    ret.PMT_KEY = "naWNUNW5pzmzISiGaHPBgMgtr";
-    ret.PMT_SECURITY = "5bpjjQWp26cll0ixzKKHZOLnt";
+    ret.PMT_URL = "http://pmt.zkungfu.com/api/";
+    ret.PMT_KEY = "8a970a5f2835ad6ba323db0e73aee6f1";
+    ret.PMT_SECURITY = "369c9360b966d3a4e4154fbc96efe0f0";
 
     ret.VERSION = "windows1.01";
     ret.TYPE = "SS";  //机器类型
     ret.ID = "01";
-    ret.STORENAME = "";
-    ret.STOREID = "HQ020001";
+    ret.STORENAME = "陈村万家店";
+    ret.STOREID = "CN757023";
     ret.STOREID2 = "CN757023";
-    ret.address_detail = "";
+    ret.address_detail = "佛山市顺德区陈村镇合成居委会佛陈路一号8座顺联广场8号楼M105";
     ret.phone = "15710652956";
 
     var queueRoutingKey = "DE.Notice";

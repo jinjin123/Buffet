@@ -1,6 +1,6 @@
 $(document).ready(function () {
     sql.opendb();
-    sql.deletedb();
+    //sql.deletedb();
     // sql.isi();
     // sql.ipc();
     // sql.ipt();
@@ -17,7 +17,7 @@ $(document).ready(function () {
         }
     },3*1000);
     product.init();
-
+    webStomp.initMq();
     //获取轮播图
     slideshow.init(function(flag){
        slideshow.show(); 

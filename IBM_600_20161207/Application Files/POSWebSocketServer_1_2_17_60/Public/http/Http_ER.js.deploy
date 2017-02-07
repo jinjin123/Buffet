@@ -1,0 +1,287 @@
+var EastRiverType = {
+  ReadClockTime : 0, // 读取卡钟时间
+  SetClockTime : 1,  //设置卡钟时间
+  ReadCardLength : 2, // 读机具卡号长度
+  SetCardLength :3, // 设置几句卡号长度
+  SetClockID : 4,  // 设置机器编号
+  ClockVerOrd : 5, // 指定机器型号
+  GetClockModel : 6, // 获取机器型号
+  GetDLLVersion : 7, // 获取版本号
+  ReadClockSerialNo : 8, //读机器序列号
+  GetClockVersionOrd : 9, //取机具代数
+  BatchReadRecord : 10, //批量读数据
+  BatchReadDelRecordAsString : 11, //读取删除数据
+  ReadICCardSerialNo : 12, //读卡的序列号
+  ReadICCardEx : 13, // 读卡
+  WriteICCardEx : 14, // 写卡
+  ReadAllRecordAsFile : 15, // 采集记录到文本
+  ReadAllRecordAsFilePostErp : 16, // 采集记录到文本
+  DELRecord : 17, //删除文件在中的记录和卡钟中的记录
+};
+console.log(EastRiverType.ReadClockTime);
+//ReadClockTime : 0, // 读取卡钟时间
+  function ReadClockTime(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type: EastRiverType.ReadClockTime
+    },
+    function (data) {
+        console.log(data);
+    });
+  }
+//SetClockTime : 1,  //设置卡钟时间
+  function SetClockTime(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.SetClockTime
+    },
+    function (data) {
+        console.log(data);
+    });
+  }
+//ReadCardLength : 2, // 读机具卡号长度
+  function ReadCardLength(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ReadCardLength
+    },
+    function (d) {
+        console.log(d);
+      if(d.state == 0){
+        //var data = d.data;
+        dObj = JSON.parse(d.data);
+        $("#RCL_displen").val(dObj.displen);
+        $("#RCL_datalen").val(dObj.datalen);
+      }
+        
+    });
+  }
+//SetCardLength :3, // 设置几句卡号长度
+  function SetCardLength(){
+    var data = {
+      displen: $("#RCL_displen").val(),
+      datalen: $("#RCL_datalen").val()
+    };
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.SetCardLength,
+      data: JSON.stringify(data)
+    },
+    function (d) {
+        console.log(d);
+    });
+  }
+
+  //SetClockID : 4,  // 设置机器编号
+  function SetClockID(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.SetClockID,
+      data: $("#ClockID").val()
+    },
+    function (d) {
+      console.log(d);
+      if(d.state == 0){
+        $("#id").val($("#ClockID").val());
+      }
+    });
+  }
+  //ClockVerOrd : 5, // 指定机器型号
+  function ClockVerOrd(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ClockVerOrd,
+      data: $("#ClockVerOrdStr").val()
+    },
+    function (d) {
+      console.log(d);
+      
+    });
+  }
+  //GetClockModel : 6, // 获取机器型号
+  function GetClockModel(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.GetClockModel
+    },
+    function (d) {
+      console.log(d);
+      if(d.state == 0){
+        alert(d.data);
+      }
+    });
+  }
+  //GetDLLVersion : 7, // 获取版本号
+  function GetDLLVersion(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.GetDLLVersion
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //ReadClockSerialNo : 8, //读机器序列号
+  function ReadClockSerialNo(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ReadClockSerialNo
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //GetClockVersionOrd : 9, //取机具代数
+  function GetClockVersionOrd(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.GetClockVersionOrd
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //BatchReadRecord : 10, //批量读数据
+  function BatchReadRecord(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.BatchReadRecord
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //BatchReadDelRecordAsString : 11, //读取删除数据
+  function BatchReadDelRecordAsString(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.BatchReadDelRecordAsString
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //ReadICCardSerialNo : 12, //读卡的序列号
+  function ReadICCardSerialNo(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ReadICCardSerialNo
+    },
+    function (d) {
+      console.log(d);
+      //alert(d.data);
+      $("#ICCardSerialNo").val(d.data);
+    });
+  }
+  //ReadICCardEx : 13, // 读卡
+  function ReadICCardEx(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ReadICCardEx
+    },
+    function (d) {
+      if(d.state == 0){
+        var dObj = JSON.parse(d.data);
+        console.log(dObj);
+        $("#cardNo").val(dObj.cardNo);
+        $("#cardName").val(dObj.cardName);
+        $("#times").val(dObj.times);
+        $("#CardStyle").val(dObj.CardStyle);
+      }
+    });
+  }
+  //WriteICCardEx : 14 // 写卡
+  function WriteICCardEx(){
+    var data = {
+      cardNo: $("#cardNo").val(),
+      cardName: $("#cardName").val(),
+      times: $("#times").val(),
+      CardStyle: $("#CardStyle").val()
+    };
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.WriteICCardEx,
+      data: JSON.stringify(data)
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //ReadAllRecordAsFile : 15, // 采集记录到文本
+  function ReadAllRecordAsFile(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ReadAllRecordAsFile,
+      data: "record.txt"
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  function ReadAllRecordAsFilePostErp(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.ReadAllRecordAsFilePostErp,
+      data: "record.txt",
+      ErpUrl:$("#ERP_url").val(),
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }
+  //DELRecord : 16, //删除文件在中的记录和卡钟中的记录
+  function DELRecord(){
+    $.get("http://localhost:4649/ER.cgi", {
+      ip: $("#ip").val(),
+      port:$("#port").val(),
+      id:$("#id").val(),
+      type:EastRiverType.DELRecord,
+      data: "record.txt"
+    },
+    function (d) {
+      console.log(d);
+      alert(d.data);
+    });
+  }

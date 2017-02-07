@@ -1,0 +1,132 @@
+/*
+ * echotest.js
+ *
+ * Derived from Echo Test of WebSocket.org (http://www.websocket.org/echo.html).
+ *
+ * Copyright (c) 2012 Kaazing Corporation.
+ */
+ var MessageType = {
+  transmit :0,
+  error: 1,
+  session: 2
+}
+
+var PersonaType = {
+  master: "master",
+  slave: "slave",
+}
+
+var persona = PersonaType.slave;
+var did = "CN021001" + "001"; //设备ID：由门店ID和设备PID组成。
+var tmpnum = Math.round(Math.random() * 100000000);
+
+var url = "ws://localhost:4649/Chat?persona=" + persona + "&did=" + did + "&tmpnum=" + tmpnum;
+//var url = "wss://localhost:5963/Echo";
+var output;
+//var websocket;
+//var name;
+
+var to = {
+  "DID":"",
+  "Persona": PersonaType.master,
+  "TmpID": "",
+  "SessionID":""
+};
+
+var from = {
+  "DID":"",
+  "Persona": PersonaType.master,
+  "TmpID": "",
+  "SessionID":""
+}
+
+var info = {
+  "from": PersonaType.master,
+  "to":"slave",
+  "data":"I am message!"
+};
+
+var data = {
+  "type":"cmd",
+  "data":"heping",
+  "json": info
+};
+//alert("header:" + JSON.stringify(header));
+var messageToClient =  {
+  "_type": MessageType.transmit,
+  "_session": to,
+  "_data":JSON.stringify(data)
+};
+
+var messageFromClient =  {
+  "_type": MessageType.transmit,
+  "_session": JSON.stringify(from),
+  "_data":JSON.stringify(data)
+};
+
+function init () {
+  output = document.getElementById ("output");
+  //name.onkeyup = "test()";
+  var name = document.getElementById("name");
+  name.onkeyup = function(){
+   // alert("helo");
+    send(JSON.stringify(messageToClient)); //document.getElementById ("name").value);
+  }
+  //websocket = new WebSocket (url);
+  doWebSocket ();
+}
+
+//alert(JSON.stringify(message));
+function doWebSocket () {
+  websocket = new WebSocket (url);
+
+  websocket.onopen = function (evt) {
+    onOpen (evt)
+  };
+
+  websocket.onclose = function (evt) {
+    onClose (evt)
+  };
+
+  websocket.onmessage = function (evt) {
+    onMessage (evt)
+  };
+
+  websocket.onerror = function (evt) {
+    onError (evt)
+  };
+}
+
+function onOpen (evt) {
+  writeToScreen ("CONNECTED");
+  //send ("WebSocket rocks");
+}
+
+function onClose (evt) {
+  writeToScreen ("DISCONNECTED");
+}
+
+function onMessage (evt) {
+  alert(evt.data);
+  var jsonData = JSON.parse(evt.data);
+  var p = document.getElementById("p");
+  p.innerHTML = jsonData._data._content;
+}
+
+function onError (evt) {
+  writeToScreen('<span style="color: red;">ERROR: ' + evt.data + '</span>');
+}
+
+function send (message) {
+  //writeToScreen ("SENT: " + message);
+  websocket.send (message);
+}
+
+function writeToScreen (message) {
+  var pre = document.createElement ("p");
+  pre.style.wordWrap = "break-word";
+  pre.innerHTML = message;
+  output.appendChild (pre);
+}
+
+window.addEventListener ("load", init, false);

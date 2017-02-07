@@ -1,0 +1,230 @@
+
+var CashDrawer_LDS = (function(){
+  'use strict';
+  var CashDrawer_LDS_Type = {
+    "OpenDrawer": 0,
+    "CloseDrawer": 1,
+    "DrawerOpened": 2,
+    "ldp_displayText": 3,
+    "dp_clearText": 4,
+    "ldp_claim": 5,
+    "ldp_close": 6
+  };
+  var ret = {},
+      url,
+      ws,
+      closed = false,
+      timesWS = 0,
+      timeoutWS = 5000,
+      heartbeatTimer,
+      storeInfo,
+      _onopen,
+      _onclose,
+      _onmessage,
+      _onerror;
+  var callbackManager = (function () {
+      var r = {},
+          id_list = [];
+      r.checkId = function (id, d) {
+          id_list.forEach(function (item, index) {
+              if (item.id == id) {
+                  if (typeof (item.fun) == "function") {
+                      item.fun(d);
+                  }
+                  item = null;
+                  id_list.splice(index, 1);
+                  return id;
+              }
+          });
+          return false;
+      };
+      r.addId = function (callback) {
+          var id = generateUUID();
+          var obj = {
+              "id": id,
+              "fun": callback
+          };
+          id_list.push(obj);
+          return id;
+      };
+      r.clearId = function () {
+          id_list.forEach(function (item, index) {
+              item = null;
+              id_list.splice(index, 1);
+          });
+      };
+      return r;
+  })();
+  function send(message) {
+    if (ws && ws.readyState == 1) {
+        ws.send(message);
+    } else {
+      try{
+          var d = JSON.parse(message);
+          d.type = SP30Type.exception;
+          callbackManager.checkId(d.id, JSON.stringify(d));
+      } catch (err) {
+          console.log(err);
+      }
+    }
+  }
+  function heartbeat() {
+      heartbeatTimer = setInterval(function () {
+                          send("");
+                      }, 73 * 1000);
+  }
+  ret.init = function (u, onmessage, onerror, onopen, onclose){
+    if(url && _onmessage && _onopen && _onclose){
+      if(u && typeof(u) == "string") url = u;
+      ws.close();
+      return;
+    }
+    url = u;
+    if(onerror == null){
+      _onerror = function(evt){
+      };
+    }else{
+      _onerror = onerror;
+    }
+    if(onopen == null){
+      _onopen = function(evt){
+        console.log("commonService connected!");
+        ret.getVersion();
+      };
+    }else{
+      _onopen = onopen;
+    }
+    if(onclose == null){
+      _onclose = function(evt){
+        if(!closed){
+          setTimeout(function(){
+            ret.reconnect();
+          },3000);
+        }
+      };
+    }else{
+      _onclose = onclose;
+    }
+    if(onmessage == null){
+      _onmessage = function(evt){
+        try{
+          var d = JSON.parse(evt.data);
+          callbackManager.checkId(d.id, d);
+        }
+        catch(err)
+        {
+          console.log("CashDrawer_LDS Message Exception!");
+        }
+        
+      };
+    }else{
+      _onmessage = onmessage;
+    }
+    if(ws){
+      ws.close();
+      ws = null;
+    }
+    ws = new WebSocket (url);
+    ws.onopen = _onopen;
+    ws.onclose = _onclose;
+    ws.onmessage = _onmessage;
+    ws.onerror = _onerror;
+    heartbeatTimer = clearInterval(heartbeatTimer);
+    heartbeat();
+  };
+  ret.close = function(){
+    closed = true;
+    if (ws) {
+          ws.close();
+          ws = null;
+      }
+  };
+  ret.reconnect = function(){
+    timesWS += 1;
+    timeoutWS = timesWS * 5000;
+    if (timesWS >= 100) {
+        timesWS == 0;
+    }
+    if(ws){
+       ws.close();
+      ws = null;
+    }
+    ws = new WebSocket (url);
+    ws.onopen = _onopen;
+    ws.onclose = _onclose;
+    ws.onmessage = _onmessage;
+    ws.onerror = _onerror;
+  };
+  ret.OpenDrawer = function(fun){
+    var id = callbackManager.addId(fun);
+    var cmd = {
+      "type": CashDrawer_LDS_Type.OpenDrawer,
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.DrawerOpened = function(fun){
+    var id = callbackManager.addId(fun);
+    var cmd = {
+      "type": CashDrawer_LDS_Type.DrawerOpened,
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.CloseDrawer = function(fun){
+    var id = callbackManager.addId(fun);
+    var cmd = {
+      "type": CashDrawer_LDS_Type.CloseDrawer,
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_displayText = function(text){
+    var id = generateUUID(); //callbackManager.addId(fun);
+    var cmd = {
+      "type": CashDrawer_LDS_Type.ldp_displayText,
+      "data": text,
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_clearText = function(){
+    var id = generateUUID();
+    var cmd = {
+      "type": commonServiceType.ldp_clearText,
+      "data": "",
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_claim = function(){
+    var id = generateUUID();
+    var cmd = {
+      "type": commonServiceType.ldp_claim,
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  ret.ldp_close = function(){
+    var id = generateUUID();
+    var cmd = {
+      "type": commonServiceType.ldp_close,
+      "id": id,
+    }
+    send(JSON.stringify(cmd));
+  };
+  return ret;
+})();
+
+function generateUUID() {
+    var d = new Date().getTime();
+    if (window.performance && typeof window.performance.now === "function") {
+        d += performance.now(); //use high-precision timer if available
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+}

@@ -1,0 +1,288 @@
+/*
+ * echotest.js
+ *
+ * Derived from Echo Test of WebSocket.org (http://www.websocket.org/echo.html).
+ *
+ * Copyright (c) 2012 Kaazing Corporation.
+ */
+var MessageType = {
+  transmit :0,
+  error: 1,
+  session: 2,
+  notfound:3,
+  disconnect:4,
+  self:5,
+  sendself:6
+}
+
+var PersonaType = {
+  master: "master",
+  slave: "slave",
+}
+
+var header = {
+  "DID":"CN021001001",
+  "Persona":"slave",
+  "SocketID": "",
+  "SessionID":""
+};
+
+var info = {
+  "from": "master",
+  "to":"slave",
+  "data":"I am message!"
+};
+
+var data = {
+  "type":"cmd",
+  "data":"heping",
+  "json": info
+};
+
+//alert("header:" + JSON.stringify(header));
+var message =  {
+  "_type": MessageType.transmit,
+  "_session": header,
+  "_data":JSON.stringify(data)
+};
+
+var persona = PersonaType.master;
+var did = "CN021001" + "001"; //设备ID：由门店ID和设备PID组成。
+var tmpnum = Math.round(Math.random() * 100000000);
+
+var url = "ws://localhost:4649/Chat?persona=" + persona + "&did=" + did + "&tmpnum=" + tmpnum;
+
+var output;
+var websocket;
+var self_id;
+function init () {
+  output = document.getElementById ("output");
+  name.onkeyup = "test()";
+  //var name = document.getElementById("name");
+  //name.onkeyup = function(){
+  //send(JSON.stringify(message));
+  ////}
+  //websocket = new WebSocket (url);
+  doWebSocket ();
+}
+
+//alert(JSON.stringify(message));
+function doWebSocket (url) {
+  websocket = new WebSocket (url);
+
+  websocket.onopen = function (evt) {
+    onOpen (evt)
+  };
+
+  websocket.onclose = function (evt) {
+    onClose (evt)
+  };
+
+  websocket.onmessage = function (evt) {
+    onMessage (evt)
+  };
+
+  websocket.onerror = function (evt) {
+    onError (evt)
+  };
+}
+
+function onOpen (evt) {
+  //writeToScreen ("CONNECTED");
+  $("#receive").text("CONNECTED");
+  $("#state").text("Online")
+  $("#connect").attr("disabled",true);
+  $("#disconnect").removeAttr("disabled",false);
+  $("#send").removeAttr("disabled",false);
+}
+
+function onClose (evt) {
+  //writeToScreen ("DISCONNECTED");
+  //$("#slave #receivePanel #receive").text(evt.data);
+  $("#receive").text("DISCONNECTED");
+  $("#state").text("Offline");
+  $("#connect").attr("disabled",false);
+  $("#disconnect").attr("disabled",true);
+  $("#send").attr("disabled",true);
+  websocket = null;
+  if(self_id){
+    window.clearInterval(self_id);
+  }
+}
+
+function session_func(data){
+  alert(data);
+  $("#list").empty();
+  var text = "";
+  var list = JSON.parse(data);
+  for(var key in list){
+    alert(key);
+    //alert(list[key])
+    //var txt3=document.createElement("p")
+    if(list[key]["DID"].length > 0){
+      if(self_id){
+        window.clearInterval(self_id);
+      }
+       text = text + "Persona: " + list [key]["Persona"] + "\n" +
+              "DID: " + list[key]["DID"] + "\n" +
+              "SocketID: " + list[key]["SocketID"] + "\n" +
+              "SessionID: " + list[key]["SessionID"] + "\n\n\n" ;
+     
+    }else{
+
+    }
+    $("#slave #states #middle_middle #list").text(text);
+  }
+}
+function self_func(data){
+  var session = JSON.parse(data);
+  alert(session);
+  $("#persona").text(session.Persona)
+  $("#did").text(session.DID)
+  $("#socketid").text(session.SocketID)
+  $("#sessionid").text(session.SessionID)
+
+}
+function onMessage (evt) {
+  //writeToScreen ('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
+  //websocket.close ();
+  //alert(evt.data);
+  //var jsonData = JSON.parse(evt.data);
+  //var p = document.getElementById("p");
+  //p.innerHTML = jsonData.type;
+  //receivePanel
+  try{
+    var jsonData = JSON.parse(evt.data);
+    if(jsonData._type == MessageType.session){
+      //alert("session");
+      session_func(jsonData._data);
+      //alert();
+      //var list = JSON.parse(jsonData["_data"]);
+      //alert(list[0].DID);
+      //alert(list[0]["DID"]);
+    }else if(jsonData._type == MessageType.transmit){
+      alert("transsmit");
+    }else if(jsonData._type == MessageType.error){
+      alert("error");
+    }else if(jsonData._type == MessageType.notfound){
+      alert("not found");
+    }else if(jsonData._type == MessageType.disconnect){
+      alert("disconnect!");
+    }else if(jsonData._type == MessageType.self){
+      alert("slef!");
+      alert(jsonData._data);
+      self_func(jsonData._data);
+    }else if(jsonData._type == MessageType.sendself){
+
+    }
+  }catch(e){
+    alert(e);
+  }
+  $("#slave #receivePanel #receive").text(evt.data);
+  //$("#w3s").attr("href","http://www.w3school.com.cn/jquery");
+}
+
+function onError (evt) {
+  writeToScreen('<span style="color: red;">ERROR: ' + evt.data + '</span>');
+}
+
+function send (message) {
+  //writeToScreen ("SENT: " + message);
+  if(websocket)
+    websocket.send (message);
+}
+
+function writeToScreen (message) {
+  var pre = document.createElement ("p");
+  pre.style.wordWrap = "break-word";
+  pre.innerHTML = message;
+  output.appendChild (pre);
+}
+function getSelfInfo(){
+   var message =  {
+      "_type": MessageType.self
+      //"_session": header,
+      //"_data": ""
+      };
+    // alert(JSON.stringify(message1));
+    //alert("hell");
+    if(websocket)
+      websocket.send(JSON.stringify(message));
+}
+function ConnectClick(e){
+  //alert("hello");
+  if(self_id){
+    window.clearInterval(self_id);
+  }
+
+  self_id=window.setTimeout(getSelfInfo,5000);
+
+  var baseUrl = $("#baseUrl").val(); //attr("value");
+  var port = $("#port").val(); //attr("value");
+  var persona = $("#persona").val(); //attr("value");
+  var did = $("#did").val(); //attr("value");
+  var socketid = $("#socketid").val(); //attr("value");
+  var url = baseUrl + ":" + port + "/Chat?persona=" + persona + "&did=" + did + "&socketid=" + socketid;
+  //alert(url);
+  output = document.getElementById ("output");
+  doWebSocket (url);
+}
+
+function DisconnectClick(e){
+  if(websocket)
+    websocket.close();
+}
+function SendClick(e){
+  if(websocket){
+    var data = $("#slave #sendPanel #dataSend").text();
+    if(data && data.length > 0)
+    {
+      alert("hello");
+      var did = $("#did").val(); //attr("value");
+      var persona = $("#persona").val() //attr("value");
+      var socketid = $("#socketid").val() //attr("value");
+      alert(did);
+      alert(persona);
+      alert(socketid);
+      //var sessionid = $("#slave #sendPanel #sessionid").attr("value");
+      var header = {
+        "DID": did,
+        "Persona":persona,
+        "SocketID": socketid,
+        "SessionID":""
+      };
+      var message =  {
+      "_type": MessageType.transmit,
+      "_session": header,
+      "_data": data
+      };
+     // alert(data);
+      websocket.send(JSON.stringify(message));
+    }
+  }
+}
+function RefreshClick(e){
+      var header = {
+        "DID": "",
+        "Persona":"",
+        "SocketID": "",
+        "SessionID":""
+      };
+      var message =  {
+      "_type": MessageType.session,
+      "_session": header,
+      "_data": ""
+      };
+    // alert(JSON.stringify(message1));
+    //alert("hell");
+    if(websocket)
+      websocket.send(JSON.stringify(message));
+}
+$(function () {
+  $("#connect").on('click', ConnectClick);
+  $("#disconnect").on('click', DisconnectClick);
+  $("#send").on('click', SendClick);
+  $("#socketlist").on('click', RefreshClick);
+});
+
+//window.addEventListener ("load", init, false);

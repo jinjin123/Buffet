@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <title>test</title>
+    <!--script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script-->
+    <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="Http_ER.js"></script>
+</head>
+    <body>
+    	ip: <input type="text" name="fname" id="ip" value="192.168.0.179" />
+    	port: <input type="text" name="fname" id="port" value="4001" />
+    	id: <input type="text" name="fname" id="id" value="01" />
+    	<br>
+        <button id="ReadClockTime" onclick="ReadClockTime()">ReadClockTime 读取卡钟时间</button><br>
+        <button id="SetClockTime" onclick="SetClockTime()">SetClockTime 设置卡钟时间</button><br>
+        <button id="ReadCardLength" onclick="ReadCardLength()">ReadCardLength 读机具卡号长度</button><br>
+        显示长度: <input type="text" name="fname" id="RCL_displen" value="10" />
+        数据长度: <input type="text" name="fname" id="RCL_datalen" value="10" />
+        <button id="SetCardLength" onclick="SetCardLength()">SetCardLength 设置机具卡号长度</button><br>
+        设置机器编号: <input type="text" name="fname" id="ClockID" value="01" /><button id="SetClockID" onclick="SetClockID()">SetClockID 设置机器编号</button><br>
+        <!--该功能不要使用会导致程序出错!!机器型号: <input type="text" name="fname" id="ClockVerOrdStr" value="890" /-->
+        <button id="ClockVerOrd" onclick="ClockVerOrd()">ClockVerOrd 指定机器型号</button><br>
+        <button id="GetClockModel" onclick="GetClockModel()">GetClockModel 获取机器型号</button><br>
+        <button id="GetDLLVersion" onclick="GetDLLVersion()">GetDLLVersion 获取DLL版本号</button><br>
+        <button id="ReadClockSerialNo" onclick="ReadClockSerialNo()">ReadClockSerialNo 读机器序列号</button><br>
+        <button id="GetClockVersionOrd" onclick="GetClockVersionOrd()">GetClockVersionOrd 取机具代数</button><br>
+        <button id="BatchReadRecord" onclick="BatchReadRecord()">BatchReadRecord 批量读数据</button><br>
+        <button id="BatchReadDelRecordAsString" onclick="BatchReadDelRecordAsString()">BatchReadDelRecordAsString 读取删除数据
+        </button><br>
+        卡序列号: <input type="text" name="fname" id="ICCardSerialNo"/><button id="ReadICCardSerialNo" onclick="ReadICCardSerialNo()">ReadICCardSerialNo 读卡的序列号</button><br>
+        卡号: <input type="text" name="fname" id="cardNo"/>
+        姓名: <input type="text" name="fname" id="cardName"/>
+        次数: <input type="text" name="fname" id="times"/>
+        卡的类型: <input type="text" name="fname" id="CardStyle"/>
+        <button id="ReadICCardEx" onclick="ReadICCardEx()">ReadICCardEx 读卡</button><br>
+        <button id="WriteICCardEx" onclick="WriteICCardEx()">WriteICCardEx 写卡</button><br>
+        <button id="ReadAllRecordAsFile" onclick="ReadAllRecordAsFile()">ReadAllRecordAsFile 读卡到文件</button><br>
+        Erp URL: <input type="text" name="fname" id="ERP_url" value='http://172.16.104.126:8086/zkf-erp/api/attendance/punch-card?api-key=49c84bd3-22f0-4724-9fb7-f26d5ec67e63' />
+        <button id="ReadAllRecordAsFile" onclick="ReadAllRecordAsFilePostErp()">ReadAllRecordAsFilePostErp 读卡到文件并上传到ERP</button><br>
+        <button id="DELRecord" onclick="DELRecord()">DELRecord 删除卡钟记录和文档中的记录</button><br>
+        
+        <script type="text/javascript">
+            
+        </script>
+    </body>
+</html>

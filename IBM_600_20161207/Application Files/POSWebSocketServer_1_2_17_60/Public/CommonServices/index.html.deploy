@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>功夫送 3.0</title>
+  <script type="text/javascript" src="commonService.js"></script>
+  <script>
+  	mCommonService.init("ws://localhost:4649/Common", null, null, function(){
+  		mCommonService.ldp_displayText("Hello!");
+  		setTimeout(function(){
+  			mCommonService.ldp_displayText("New World!!!");
+  		}, 5000);
+    });
+    function OpenDrawer()
+  	{
+  		mCommonService.OpenDrawer();
+  	}
+  	function customer(){
+  		var aa = document.getElementById("customerStr").value;
+  		mCommonService.ldp_displayText(aa);
+  	}
+  </script>
+  </head>
+  <body>
+  <button id="OpenDrawer" onclick="OpenDrawer()">开钱箱</button><br />
+   First name: <input type="text" name="fname" id="customerStr" value="George" />
+   <button id="customer" onclick="customer()">客显</button><br />
+  </body>
+</html>

@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+     <style type="text/css">
+            p {
+              margin-left: 8px;
+            }
+
+            .input-Right {
+              margin-right: 10px;
+            }
+            .panel{
+                border: 1px solid #0f0; 
+                margin-left: auto;
+                margin-right: auto;
+                width: 1200px; 
+                height:800px; 
+                /*margin-left: 10%; */
+                margin-right: auto; 
+                margin-top: 30px;
+            }
+            .setting {
+               border: 1px solid #0f0; 
+                width: 400px; 
+                height:200px; 
+                margin-left: 10%;
+                margin-right: auto; 
+                margin-top: 30px;
+            }
+             .statue {
+               border: 1px solid #0f0; 
+                width: 400px; 
+                height:200px; 
+                margin-left: 10%;
+                margin-right: auto; 
+                margin-top: 30px;
+            }
+            .send {
+               border: 1px solid #0f0; 
+                margin-left: auto;
+                margin-right: auto;
+                width: 1200px; 
+                height:200px; 
+                /*margin-left: 10%; */
+                margin-right: auto; 
+                margin-top: 30px;
+            }
+            .receive {
+               border: 1px solid #0f0; 
+                margin-left: auto;
+                margin-right: auto;
+                width: 1200px; 
+                height:200px; 
+                /*margin-left: 10%; */
+                margin-right: auto; 
+                margin-top: 30px;
+            }
+      </style>
+      <title>WebSocket Chat Test</title>
+    <script type="text/javascript" src="Js/zepto.js">
+    </script>
+  </head>
+  <body>
+    <center>
+      <h2>WebSocket Chat Test</h2>
+    </center>
+    <div class="panel" >
+       <div id="master" style="margin:auto;width:980px;height:430px">
+          <div id="setting" style="background-color:#0000AA; float:left; width:300px;height:240px">
+            <h3 style="margin-left:16px; margin-top:6px"> Settings </h3>
+            Persona: <input type="text" name="persona" id="persona" class="input-Right" value="master"/>
+            <br>
+            DID: <input type="text" name="did" id="did" class="input-Right" value="CN021123001"/>
+            <br>
+            SocketID: <input type="text" name="tmpid" id="socketid" class="input-Right" value="master001"/>
+            <br>
+            baseUrl: <input type="text" name="baseUrl" id="baseUrl" class="input-Right" value="ws://localhost"/>
+            <br>
+            port: <input type="text" name="port" id="port" value="4649"/>
+            <br>
+            <button type="button" id="connect">Connect</button> 
+            <button type="button" id="disconnect" disabled="disabled">Disconnect</button>
+          </div>
+          <div id="states" style="background-color:red; float:right; width:660px;height:240px;margin-left:16px">
+              <div id="middle_left" style="background-color:purple; float:left; width:240px;height:240px;">
+              <h3 style="margin-left:16px; margin-top:6px"> state </h3>
+              <p> 
+                state: <label id="state">offline</label>
+                <br>
+                Persona: <lable id="persona"> master</lable>
+                <br>
+                DID: <lable id="did"> DID </lable>
+                <br>
+                SocketID: <lable id="socketid"> SocketID </lable>
+                <br>
+                SessionID: <lable id="sessionid"> SessionID </lable>
+              </p>
+
+             </div>
+             <div id="middle_middle" style="background-color:green; float:left; width:400px; height:240px;">
+                  <h3 style="margin-left:16px; margin-top:6px"> Websocket Connected List </h3>
+                  <button type="button" id="socketlist">Refresh List</button>
+                   <textarea rows="10" cols="50" id="list">
+              
+                  </textarea>
+             </div>
+         </div>
+         <div id="sendPanel" style="background-color:orange; float:left; width:960px;height:165px;margin-top:16px">
+            <div id="middle_left" style="background-color:purple; float:left; width:660px;height:165px;">
+              <textarea rows="9" cols="90" id="dataSend">
+              在w3school，你可以找到你所需要的所有的网站建设教程。
+              </textarea>
+            </div>
+            <div id="middle_middle" style="background-color:green; float:left; width:300px;height:165px;">
+                Persona: <input type="text" name="persona" id="persona" class="input-Right" value="master"/>
+                <br>
+                DID: <input type="text" name="did" id="did" class="input-Right" value="CN021123001"/>
+                <br>
+                SocketID: <input type="text" name="tmpid" id="socketid" class="input-Right" value="master001"/>
+            <br>
+              <button type="button" id="send" disabled="disabled">send</button> 
+            </div>
+         </div>
+         <div id="receivePanel" style="background-color:darkblue; float:left; width:960px;height:165px;margin-top:16px">
+              <h3 style="margin-left:16px; margin-top:6px"> Receive </h3>
+             <textarea rows="7" cols="120" id="receive">
+              
+              </textarea>
+         </div>
+      </div>
+    </div>
+
+    <p>First name: <input type="text" name="fname" id="name"/></p>
+    <br>
+    <p id="p"></p>
+    <div id="output"></div>
+   <script type="text/javascript" src="JS/master1.js">
+   </script>
+  </body>
+</html>

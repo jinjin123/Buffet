@@ -1,5 +1,6 @@
 order = (function() {
 	var ret = {};
+	ret.orderno = "";
 	ret.show = function() {
 		$('#order').show();
 		$('.choosepay').show();
@@ -122,6 +123,7 @@ $('.paymentinfo').on('click',function(){
 	}
 	order.submitorder(paytype,function(flag,_param){
 		if(flag == true) {
+			order.orderno = _param.orderInfo.orderid;
 			$('.choosepay').hide(800);
 			$('.protect').show(800);
 			$('.paystep2').css({
@@ -140,6 +142,7 @@ $('.paymentinfo').on('click',function(){
             kit.clearbackindexTime();
             kit.payTime();
 			inquiry = setInterval(function () {
+				console.log("11");
                 if (count >= 30) {
                      clearInterval(inquiry);
                      clearInterval(paytip);
@@ -158,6 +161,36 @@ $('.paymentinfo').on('click',function(){
 					 			clearTimeout(paytime);
                                 kit.clearpayTime();
                                 console.log(result);
+                                var istakeout = cart.getIsTakeout();
+                                var amout = cart.getStaticInfo().total;
+                                var discount = cart.getStaticInfo().discount;
+                                var realpay = cart.getStaticInfo().realpay;
+                                var protitle = "";
+                                if (istakeout == 1) {
+                                    protitle = '外带';
+                                } if (istakeout == 0) {
+                                    protitle = '堂食';
+                                }
+                                if (paytype == "NATIVE") {
+                                    paytype = "微信";
+                                } else if (paytype == "create_direct_pay_by_user") {
+                                    paytype = "支付宝";
+                                } else if (paytype == "quickpass"){
+                                    paytype = "闪付";
+                                }else{
+                                    paytype = "会员卡"
+                                }
+                                var printerStamp = {
+                                    paySerial : result.tpn_transaction_id,
+                                    amout : amout,
+                                    discount : discount,
+                                    realpay : realpay,
+                                    protitle : protitle,
+                                    payType : paytype
+                                }
+                                templatePrinter.printerTemplateSmall(printerStamp);
+
+
                                 sql.updateOrderInfo_payStatus(result,function(flag) {
                                 	if(flag ==true){
                                 		console.log("success: update patstatus is ok");

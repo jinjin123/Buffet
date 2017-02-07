@@ -89,8 +89,12 @@ kit = (function () {
         	topaytime--;
         	if(topaytime <=0 ){
         		clearInterval(topay);
+                clearInterval(inquiry);
         		$('.mypaytip').slideUp(800);
         		$('#paym').html("00:00");
+                slideshow.show();
+                product.hide();
+                order.hide();
         	}
     	},1000);
     }
@@ -187,6 +191,64 @@ kit = (function () {
           input.attachEvent("oncut", fun);//处理粘贴
         }
     }
+    //打印参数
+    ret.getStampParam = function(paytype,paySerial) {
+        var istakeout = cart.getIsTakeout();
+        var amout = cart.getStaticInfo().total;
+        var discount = cart.getStaticInfo().discount;
+        var realpay = cart.getStaticInfo().realpay;
+        var protitle = "";
+        if (istakeout == 1) {
+            protitle = '外带';
+        } if (istakeout == 0) {
+            protitle = '堂食';
+        }
+        if (paytype == "NATIVE") {
+            paytype = "微信";
+        } else if (paytype == "create_direct_pay_by_user") {
+            paytype = "支付宝";
+        } else if (paytype == "quickpass"){
+            paytype = "闪付";
+        }else{
+            paytype = "会员卡"
+        }
+        var stamp = {
+                "title": "欢迎光临" + config.STORENAME,                      //打印头
+                "orderId": "取餐号："+order.orderno.substring(order.orderno.length - 4, order.orderno.length),     //取餐号
+                "machineId": config.ID,  //机器编号
+                "cashier": "",                               //收银员
+                "yingshou" : realpay,                                          //应收金额
+                "zhaoling" : "0.00",                                  //找零金额
+                "orderTime": new Date().format('yyyy-MM-dd hh:mm:ss'),        //下单时间
+                "kind": protitle,                                                   //堂食或外带
+                "payType": paytype,          //支付方式1、现金2、支付宝3、微信4、银联、5闪付6、赠送7、膳食
+                "total": amout,                                   //菜品总价（合计金额）
+                "discount": discount,//优惠金额=优惠+赠送
+                "card_id": "",                                    //会员卡号
+                "card_balance": "",                              //会员卡余额
+                "card_getIntegral": "",                         //会员卡积分
+                "card_totalIntegral": "",              //会员卡可用积分
+                "payTransactionNumber": paySerial,                    //交易流水号
+                "payCashNumber": realpay,                       //已付金额
+                "storename": config.STORENAME,                         //门店名称
+                "storeNum": config.phone,                              //门店电话
+                "storeAddr": config.address_detail,                         //门店地址
+                "footer": "",                      //打印尾
+                "prodList": [],                                        //菜品信息
+                "timestamp": (new Date()).valueOf()+""  
+        }
+        var _productlist = cart.getproductlist();
+        for (var i = 0; i < _productlist.length; i++) {
+            var _pro = {};
+            if (_productlist[i] == null)
+                continue;
+            _pro.num = _productlist[i].productnum;
+            _pro.name = _productlist[i].productname;
+            _pro.sum = _productlist[i].totalprice;
+            stamp.prodList.push(_pro);
+        }
+        return stamp;
+    };
     return ret;
 })();
 
